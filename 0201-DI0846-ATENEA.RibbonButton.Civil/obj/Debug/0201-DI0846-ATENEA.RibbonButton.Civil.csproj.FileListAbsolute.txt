@@ -1,0 +1,7 @@
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\0201-DI0846-ATENEA.RibbonButton.Civil.dll.config
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\0201-DI0846-ATENEA.RibbonButton.Civil.dll
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\0201-DI0846-ATENEA.RibbonButton.Civil.pdb
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\Debug\0201-DI0846-ATENEA.RibbonButton.Civil.csproj.AssemblyReference.cache
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\Debug\0201-DI0846-ATENEA.RibbonButton.Civil.csproj.CoreCompileInputs.cache
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\Debug\0201-DI0846-ATENEA.RibbonButton.Civil.dll
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\Debug\0201-DI0846-ATENEA.RibbonButton.Civil.pdb
