@@ -1,9 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37012.4 d17.14
+VisualStudioVersion = 17.14.37012.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "0201-DI0846-ATENEA.RibbonButton.Civil", "0201-DI0846-ATENEA.RibbonButton.Civil.csproj", "{5C40E114-24C1-4F41-904E-9094E3D09A96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TYPSA.SharedLibCivil", "..\..\0000-TYPSA.SharedLibCivil\TYPSA.SharedLibCivil\TYPSA.SharedLibCivil.csproj", "{755847FF-9F9B-4EF0-85F7-534D02E128A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TYPSA.SharedLibAutocad", "..\..\0000-TYPSA.SharedLibAutocad\TYPSA.SharedLibAutocad\TYPSA.SharedLibAutocad.csproj", "{631B9318-A021-4B24-87F0-3FEC637EAE77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TYPSA.SharedLibExcel", "..\..\0000-TYPSA.SharedLibExcel\TYPSA.SharedLibExcel\TYPSA.SharedLibExcel.csproj", "{FF31B661-8CE6-420F-8720-F077B273E9C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TYPSA.SharedLibForms", "..\..\0000-TYPSA.SharedLibForms\TYPSA.SharedLibForms\TYPSA.SharedLibForms.csproj", "{8F836313-B339-4DB6-8A55-AF61386871B4}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ATENEA.RibbonButton.Civil", "..\ATENEA.RibbonButton.Civil\ATENEA.RibbonButton.Civil.vdproj", "{196FC6F2-B6C0-65F8-1CC0-6A526DC562D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,24 @@ Global
 		{5C40E114-24C1-4F41-904E-9094E3D09A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C40E114-24C1-4F41-904E-9094E3D09A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C40E114-24C1-4F41-904E-9094E3D09A96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{755847FF-9F9B-4EF0-85F7-534D02E128A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{755847FF-9F9B-4EF0-85F7-534D02E128A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{755847FF-9F9B-4EF0-85F7-534D02E128A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{755847FF-9F9B-4EF0-85F7-534D02E128A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{631B9318-A021-4B24-87F0-3FEC637EAE77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{631B9318-A021-4B24-87F0-3FEC637EAE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{631B9318-A021-4B24-87F0-3FEC637EAE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{631B9318-A021-4B24-87F0-3FEC637EAE77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF31B661-8CE6-420F-8720-F077B273E9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF31B661-8CE6-420F-8720-F077B273E9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF31B661-8CE6-420F-8720-F077B273E9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF31B661-8CE6-420F-8720-F077B273E9C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F836313-B339-4DB6-8A55-AF61386871B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F836313-B339-4DB6-8A55-AF61386871B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F836313-B339-4DB6-8A55-AF61386871B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F836313-B339-4DB6-8A55-AF61386871B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{196FC6F2-B6C0-65F8-1CC0-6A526DC562D0}.Debug|Any CPU.ActiveCfg = Debug
+		{196FC6F2-B6C0-65F8-1CC0-6A526DC562D0}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
