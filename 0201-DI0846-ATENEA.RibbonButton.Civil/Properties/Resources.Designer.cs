@@ -159,5 +159,15 @@ namespace _0201_DI0846_ATENEA.RibbonButton.Civil.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Byte[].
+        /// </summary>
+        internal static byte[] typsaIcon {
+            get {
+                object obj = ResourceManager.GetObject("typsaIcon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

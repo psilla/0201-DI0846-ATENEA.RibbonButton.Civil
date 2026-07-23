@@ -18,13 +18,18 @@ namespace TYPSA.PS.RibbonButton.Civil
         public const string ProjectInfoComparer = "ProjectInfoComparer";
         public const string PropertySetComparer = "PropertySetComparer";
         public const string SelectByHandle = "SelectByHandle";
-        
         // ATENEA CIVIL WEB
-
         public const string ButtonAteneaModelChecker = "ButtonAteneaModelChecker";
         public const string ButtonAteneaParamCheckExp = "ButtonAteneaParamCheckExp";
+        public const string ButtonAteneaParamCheckImp = "ButtonAteneaParamCheckImp";
         public const string ButtonAteneaParamDataExp = "ButtonAteneaParamDataExp";
         public const string ButtonAteneaParamDataImp = "ButtonAteneaParamDataImp";
+        // Process
+        public const string ProcessAteneaModelChecker = "Atenea Model Checker";
+        public const string ProcessAteneaParamCheckExp = "Atenea Param Check Exp";
+        public const string ProcessAteneaParamCheckImp = "Atenea Param Check Imp";
+        public const string ProcessAteneaParamDataExp = "Atenea Param Data Exp";
+        public const string ProcessAteneaParamDataImp = "Atenea Param Data Imp";
     }
 
     public class App : IExtensionApplication
@@ -77,17 +82,10 @@ namespace TYPSA.PS.RibbonButton.Civil
 
                 // Panel4
                 Autodesk.Windows.RibbonPanelSource rps4 = new Autodesk.Windows.RibbonPanelSource();
-                rps4.Title = "ATENEA PROPERTIES EXCHANGE WEB"; 
+                rps4.Title = "ATENEA CIVIL WEB"; 
                 Autodesk.Windows.RibbonPanel rp4 = new Autodesk.Windows.RibbonPanel();
                 rp4.Source = rps4;
                 rtab.Panels.Add(rp4);
-
-                // Panel5
-                Autodesk.Windows.RibbonPanelSource rps5 = new Autodesk.Windows.RibbonPanelSource();
-                rps5.Title = "ATENEA MODEL CHECKER";
-                Autodesk.Windows.RibbonPanel rp5 = new Autodesk.Windows.RibbonPanel();
-                rp5.Source = rps5;
-                rtab.Panels.Add(rp5);
 
                 /////////////// ADDING BUTTONS //////////////////////
 
@@ -194,51 +192,11 @@ namespace TYPSA.PS.RibbonButton.Civil
                 // Añadimos button
                 rps3.Items.Add(impExcelDropdown);
 
-                // Param Data Exporter Web
-                // Back
-                Autodesk.Windows.RibbonButton button8 = CreateRibbonButton(
-                    name: "Properties Exporter Back",
-                    text: "Properties Exporter",
-                    image: Resources.exporter,
-                    commandParameter: RibbonCommands.ButtonAteneaParamDataExp,
-                    tooltipTitle: "Exportador de propiedades",
-                    tooltipContent: "Exporta las propiedades de todos los Property Set de los modelos seleccionados a un archivo JSON."
-                );
-                // Crear dropdown 
-                RibbonSplitButton expWebDropdown = CreateRibbonSplitButton(
-                    "expWebDropdown",
-                    "Properties Exporter Web",
-                    Resources.exporter,
-                    new List<Autodesk.Windows.RibbonButton> { button8 }
-                );
-                // Añadimos button
-                rps4.Items.Add(expWebDropdown);
+                // ---------------------------------
+                // ATENEA CIVIL WEB
+                // ---------------------------------
 
-                // Separador visual
-                rps4.Items.Add(new Autodesk.Windows.RibbonSeparator());
-
-                // Param Data Importer Web
-                // Back
-                Autodesk.Windows.RibbonButton button9 = CreateRibbonButton(
-                    name: "Properties Importer Back",
-                    text: "Properties Importer",
-                    image: Resources.importer,
-                    commandParameter: RibbonCommands.ButtonAteneaParamDataImp,
-                    tooltipTitle: "Importador de propiedades",
-                    tooltipContent: "Importa las propiedades seleccionadas desde un archivo JSON a los modelos seleccionados."
-                );
-                // Crear dropdown 
-                RibbonSplitButton impWebDropdown = CreateRibbonSplitButton(
-                    "impWebDropdown",
-                    "Properties Importer Web",
-                    Resources.importer,
-                    new List<Autodesk.Windows.RibbonButton> { button9 }
-                );
-                // Añadimos button
-                rps4.Items.Add(impWebDropdown);
-
-                // ATENEA MC
-                // General Analysis
+                // Analisis General
                 Autodesk.Windows.RibbonButton buttonAteneaMC = CreateRibbonButton(
                     name: "Atenea Model Checker",
                     text: "Atenea Model Checker",
@@ -248,22 +206,71 @@ namespace TYPSA.PS.RibbonButton.Civil
                     tooltipContent: ""
                 );
                 // Añadimos button
-                rps5.Items.Add(buttonAteneaMC);
+                rps4.Items.Add(buttonAteneaMC);
 
                 // Separador visual
-                rps5.Items.Add(new Autodesk.Windows.RibbonSeparator());
+                rps4.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
-                // Param Check Exporter
-                Autodesk.Windows.RibbonButton buttonAteneaParDataExp = CreateRibbonButton(
-                    name: "Atenea Param Check Exporter",
-                    text: "Atenea Param Check Exporter",
+                // Param Check
+                // Exporter
+                Autodesk.Windows.RibbonButton buttonAteneaParCheckExp = CreateRibbonButton(
+                    name: "Atenea Param Check Export",
+                    text: "Atenea Param Check",
                     image: Resources.AteneaCompactModels,
                     commandParameter: RibbonCommands.ButtonAteneaParamCheckExp,
                     tooltipTitle: "",
                     tooltipContent: ""
                 );
+                // Importer
+                Autodesk.Windows.RibbonButton buttonAteneaParCheckImp = CreateRibbonButton(
+                    name: "Atenea Param Check Import",
+                    text: "Atenea Param Check",
+                    image: Resources.AteneaCompactModels,
+                    commandParameter: RibbonCommands.ButtonAteneaParamCheckImp,
+                    tooltipTitle: "",
+                    tooltipContent: ""
+                );
+                // Crear dropdown 
+                RibbonSplitButton parCheckDropdown = CreateRibbonSplitButton(
+                    "parCheckDropdown",
+                    "Atenea Param Check",
+                    Resources.exporter,
+                    new List<Autodesk.Windows.RibbonButton> { buttonAteneaParCheckExp, buttonAteneaParCheckImp }
+                );
                 // Añadimos button
-                rps5.Items.Add(buttonAteneaParDataExp);
+                rps4.Items.Add(parCheckDropdown);
+
+                // Separador visual
+                rps4.Items.Add(new Autodesk.Windows.RibbonSeparator());
+
+                // Param Data 
+                // Exporter
+                Autodesk.Windows.RibbonButton buttonAteneaParDataExp = CreateRibbonButton(
+                    name: "Atenea Param Data Export",
+                    text: "Atenea Param Data",
+                    image: Resources.exporter,
+                    commandParameter: RibbonCommands.ButtonAteneaParamDataExp,
+                    tooltipTitle: "Exportador de propiedades",
+                    tooltipContent: "Exporta las propiedades de todos los Property Set de los modelos seleccionados a un archivo JSON."
+                );
+                // Importer
+                Autodesk.Windows.RibbonButton buttonAteneaParDataImp = CreateRibbonButton(
+                    name: "Atenea Param Data Import",
+                    text: "Atenea Param Data",
+                    image: Resources.importer,
+                    commandParameter: RibbonCommands.ButtonAteneaParamDataImp,
+                    tooltipTitle: "Importador de propiedades",
+                    tooltipContent: "Importa las propiedades seleccionadas desde un archivo JSON a los modelos seleccionados."
+                );
+                // Crear dropdown 
+                RibbonSplitButton parDataDropdown = CreateRibbonSplitButton(
+                    "parDataDropdown",
+                    "Atenea Param Data",
+                    Resources.exporter,
+                    new List<Autodesk.Windows.RibbonButton> { buttonAteneaParDataExp, buttonAteneaParDataImp }
+                );
+                // Añadimos button
+                rps4.Items.Add(parDataDropdown);
 
                 /////////////// ACTIVAR RIBBON //////////////////////
 
@@ -344,6 +351,11 @@ namespace TYPSA.PS.RibbonButton.Civil
                         case RibbonCommands.ButtonAteneaParamCheckExp:
                             // Instanciamos la clase
                             cls_00_ButtonAteneaParamCheckExp.ButtonAteneaParamDataExp();
+                            break;
+
+                        case RibbonCommands.ButtonAteneaParamCheckImp:
+                            // Instanciamos la clase
+                            cls_00_ButtonAteneaParamCheckImp.ButtonAteneaParamDataImp();
                             break;
 
                         case RibbonCommands.ButtonAteneaParamDataExp:

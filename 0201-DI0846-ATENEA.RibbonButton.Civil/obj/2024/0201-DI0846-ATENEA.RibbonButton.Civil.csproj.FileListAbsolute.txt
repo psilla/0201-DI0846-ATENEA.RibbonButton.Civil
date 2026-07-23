@@ -1,0 +1,5 @@
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\2024\0201-DI0846-ATENEA.RibbonButton.Civil.csproj.AssemblyReference.cache
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\2024\0201-DI0846-ATENEA.RibbonButton.Civil.csproj.ResolveComReference.cache
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\2024\_0201_DI0846_ATENEA.RibbonButton.Civil.Properties.Resources.resources
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\2024\0201-DI0846-ATENEA.RibbonButton.Civil.csproj.GenerateResource.cache
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\obj\2024\0201-DI0846-ATENEA.RibbonButton.Civil.csproj.CoreCompileInputs.cache

@@ -5,12 +5,13 @@ using System.Windows.Forms;
 using TYPSA.PS.RibbonButton.Civil.Source.Class.Main;
 using TYPSA.SharedLib.Civil.Main;
 using TYPSA.SharedLib.Civil.Buttons;
+using TYPSA.SharedLib.Autocad.Main;
 
 namespace TYPSA.PS.RibbonButton.Civil.Buttons
 {
     internal class cls_02_ButtonProjectInfoComparer
     {
-        [CommandMethod("ProjectInfoComparer")]
+        [CommandMethod(RibbonCommands.ProjectInfoComparer)]
         public void ProjectInfoComparer()
         {
             // Obtener datos de usuario
@@ -36,15 +37,16 @@ namespace TYPSA.PS.RibbonButton.Civil.Buttons
             TimeSpan duration = endTime - startTime;
 
             // Mensaje
-            MessageBox.Show("Data extraction process has completed successfully." +
-                            "\nDuration: " + duration.ToString(@"hh\:mm\:ss") +
-                            "\nStarted at: " + startTime.ToString("HH:mm:ss") +
-                            "\nEnded at: " + endTime.ToString("HH:mm:ss") +
-                            $"\n\n{processResult.ParametersAnalyzed} parameters have been exported in total." +
-                            $"\n\n{processResult.TotalFilesProcessed} files were processed successfully.",
-                            "Extraction Complete",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+            MessageBox.Show(
+                "Data extraction process has completed successfully." +
+                "\nDuration: " + duration.ToString(@"hh\:mm\:ss") +
+                "\nStarted at: " + startTime.ToString("HH:mm:ss") +
+                "\nEnded at: " + endTime.ToString("HH:mm:ss") +
+                $"\n\n{processResult.ParametersAnalyzed} parameters have been exported in total." +
+                $"\n\n{processResult.TotalFilesProcessed} files were processed successfully.",
+                "Extraction Complete",
+                MessageBoxButtons.OK, MessageBoxIcon.Information
+            );
                        
             
         }

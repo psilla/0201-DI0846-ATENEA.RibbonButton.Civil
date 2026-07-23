@@ -15,7 +15,7 @@ namespace TYPSA.PS.RibbonButton.Civil
     public class cls_01_ButtonSelectByHandle
     {
         // Método para seleccionar un objeto por su handle
-        [CommandMethod("SelectByHandle")]
+        [CommandMethod(RibbonCommands.SelectByHandle)]
         public void SelectByHandle()
         {
             // Ruta completa del archivo Lisp

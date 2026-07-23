@@ -109,3 +109,7 @@ C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\b
 C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\System.Security.Cryptography.Pkcs.xml
 C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\AcMapCoordsysCoreMgd.dll
 C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\AcMapSpatialReferenceMgd.dll
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\AeccPressurePipesMgd.dll
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibCivil_2026.dll
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibCivil_2026.pdb
+C:\0201-DI0846-ATENEA.RibbonButton.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\Debug\TYPSA.SharedLibCivil_2026.dll.config
