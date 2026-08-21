@@ -3,20 +3,13 @@
   "WorkspaceRootPath": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|c:\\0201-di0846-atenea.ribbonbutton.civil\\0201-di0846-atenea.ribbonbutton.civil\\03-main\\cls_00_ateneamodelchecker\\cls_00_mainateneaparamcheckexp\\cls_00_mainateneaparamcheckexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|solutionrelative:03-main\\cls_00_ateneamodelchecker\\cls_00_mainateneaparamcheckexp\\cls_00_mainateneaparamcheckexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FF31B661-8CE6-420F-8720-F077B273E9C6}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibexcel\\typsa.sharedlibexcel\\00-exporttoexcel\\cls_00_exportfilteredparamchecktoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|c:\\0201-di0846-atenea.ribbonbutton.civil\\0201-di0846-atenea.ribbonbutton.civil\\03-main\\cls_00_ateneamodelchecker\\cls_00_mainateneaparamcheckimp\\cls_00_mainateneaparamcheckimp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|solutionrelative:03-main\\cls_00_ateneamodelchecker\\cls_00_mainateneaparamcheckimp\\cls_00_mainateneaparamcheckimp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{755847FF-9F9B-4EF0-85F7-534D02E128A2}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibcivil\\typsa.sharedlibcivil\\00-getentities\\cls_00_getblockrefbylayerfromxrefwithps.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-main\\cls_00_ateneamodelchecker\\cls_00_mainateneaparamdataexp\\cls_00_mainateneaparamdataexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|solutionrelative:03-main\\cls_00_ateneamodelchecker\\cls_00_mainateneaparamdataexp\\cls_00_mainateneaparamdataexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\02-buttons\\cls_00_ateneamodelchecker\\cls_00_buttonateneaparamcheckexp\\cls_00_buttonateneaparamcheckexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_00_ateneamodelchecker\\cls_00_buttonateneaparamcheckexp\\cls_00_buttonateneaparamcheckexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{755847FF-9F9B-4EF0-85F7-534D02E128A2}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibcivil\\typsa.sharedlibcivil\\01-main\\cls_00_ateneamodelchecker\\cls_00_mainchecksubassemblies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +19,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 133,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,40 +55,40 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "cls_00_ButtonAteneaParamCheckExp.cs",
-              "DocumentMoniker": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\02-Buttons\\cls_00_AteneaModelChecker\\cls_00_ButtonAteneaParamCheckExp\\cls_00_ButtonAteneaParamCheckExp.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_00_AteneaModelChecker\\cls_00_ButtonAteneaParamCheckExp\\cls_00_ButtonAteneaParamCheckExp.cs",
-              "ToolTip": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\02-Buttons\\cls_00_AteneaModelChecker\\cls_00_ButtonAteneaParamCheckExp\\cls_00_ButtonAteneaParamCheckExp.cs",
-              "RelativeToolTip": "02-Buttons\\cls_00_AteneaModelChecker\\cls_00_ButtonAteneaParamCheckExp\\cls_00_ButtonAteneaParamCheckExp.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAYwEIAAABCAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "cls_00_ExportFilteredParamCheckToExcel.cs",
+              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
+              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
+              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
+              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-23T11:58:27.633Z"
+              "WhenOpened": "2026-08-21T06:17:46.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
+              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
+              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
+              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
+              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAqwCEAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-21T06:17:42.213Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "cls_00_MainAteneaParamDataExp.cs",
-              "DocumentMoniker": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamDataExp\\cls_00_MainAteneaParamDataExp.cs",
-              "RelativeDocumentMoniker": "03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamDataExp\\cls_00_MainAteneaParamDataExp.cs",
-              "ToolTip": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamDataExp\\cls_00_MainAteneaParamDataExp.cs",
-              "RelativeToolTip": "03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamDataExp\\cls_00_MainAteneaParamDataExp.cs",
-              "ViewState": "AgIAAMMCAAAAAAAAAAAkwNECAAAcAAAAAAAAAA==",
+              "Title": "cls_00_MainCheckSubassemblies.cs",
+              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
+              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
+              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
+              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-22T08:17:32.487Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "cls_00_MainAteneaParamCheckExp.cs",
-              "DocumentMoniker": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
-              "RelativeDocumentMoniker": "03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
-              "ToolTip": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
-              "RelativeToolTip": "03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
-              "ViewState": "AgIAAFgCAAAAAAAAAAD4vz4CAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-23T09:37:41.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-21T06:11:49.958Z"
             }
           ]
         },
@@ -142,40 +135,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:2:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "bf624139-03d8-4304-bf4b-536ba8d53043",
-        "Display": 1,
-        "X": 359,
-        "Y": 294,
-        "Width": 967,
-        "Height": 594,
-        "WindowState": 2
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "cls_00_MainAteneaParamCheckImp.cs",
-              "DocumentMoniker": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckImp\\cls_00_MainAteneaParamCheckImp.cs",
-              "RelativeDocumentMoniker": "03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckImp\\cls_00_MainAteneaParamCheckImp.cs",
-              "ToolTip": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckImp\\cls_00_MainAteneaParamCheckImp.cs",
-              "RelativeToolTip": "03-Main\\cls_00_AteneaModelChecker\\cls_00_MainAteneaParamCheckImp\\cls_00_MainAteneaParamCheckImp.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPQCAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-23T11:49:47.128Z",
-              "EditorCaption": ""
             }
           ]
         }
