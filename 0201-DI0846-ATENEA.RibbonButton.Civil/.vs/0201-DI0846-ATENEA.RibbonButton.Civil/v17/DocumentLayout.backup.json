@@ -1,15 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\0201-DI0846-ATENEA.RibbonButton.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\",
+  "WorkspaceRootPath": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FF31B661-8CE6-420F-8720-F077B273E9C6}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibexcel\\typsa.sharedlibexcel\\00-exporttoexcel\\cls_00_exportfilteredparamchecktoexcel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{755847FF-9F9B-4EF0-85F7-534D02E128A2}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibcivil\\typsa.sharedlibcivil\\00-getentities\\cls_00_getblockrefbylayerfromxrefwithps.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{755847FF-9F9B-4EF0-85F7-534D02E128A2}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibcivil\\typsa.sharedlibcivil\\01-main\\cls_00_ateneamodelchecker\\cls_00_mainchecksubassemblies.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|c:\\0201-di0846-atenea.civil\\0201-di0846-atenea.ribbonbutton.civil\\03-main\\cls_00_ateneaweb\\cls_00_mainateneamodelchecker\\cls_00_mainateneamodelchecker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|solutionrelative:03-main\\cls_00_ateneaweb\\cls_00_mainateneamodelchecker\\cls_00_mainateneamodelchecker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -56,39 +51,15 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "cls_00_ExportFilteredParamCheckToExcel.cs",
-              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
-              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
-              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
-              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibExcel\\TYPSA.SharedLibExcel\\00-ExportToExcel\\cls_00_ExportFilteredParamCheckToExcel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
+              "Title": "cls_00_MainAteneaModelChecker.cs",
+              "DocumentMoniker": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaModelChecker\\cls_00_MainAteneaModelChecker.cs",
+              "RelativeDocumentMoniker": "03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaModelChecker\\cls_00_MainAteneaModelChecker.cs",
+              "ToolTip": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaModelChecker\\cls_00_MainAteneaModelChecker.cs",
+              "RelativeToolTip": "03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaModelChecker\\cls_00_MainAteneaModelChecker.cs",
+              "ViewState": "AgIAABsCAAAAAAAAAAAiwC0CAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-21T06:17:46.73Z",
+              "WhenOpened": "2026-08-26T06:25:32.403Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
-              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
-              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
-              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
-              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\00-GetEntities\\cls_00_GetBlockRefByLayerFromXrefWithPs.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAqwCEAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-21T06:17:42.213Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "cls_00_MainCheckSubassemblies.cs",
-              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
-              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
-              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
-              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibCivil\\TYPSA.SharedLibCivil\\01-Main\\cls_00_AteneaModelChecker\\cls_00_MainCheckSubassemblies.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-21T06:11:49.958Z"
             }
           ]
         },

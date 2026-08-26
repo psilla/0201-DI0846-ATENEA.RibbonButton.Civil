@@ -665,6 +665,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 
         public static async Task MainAteneaParamDataExp(
             string[] selectedFiles, 
+            string selectedFolderPath,
             string projectCode,
             DateTime startTime,
             CadSessionInfo info,
@@ -1100,7 +1101,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 processStopwatch = Stopwatch.StartNew();
 
                 bool jsonGenerated = cls_00_SaveJson.TrySaveJson(
-                    isSpanish, dictDataByFileToJson, projectCode, strRootFolderName, strJsonFileNameParamDataExp
+                    isSpanish, dictDataByFileToJson, projectCode, strRootFolderName, strJsonFileNameParamDataExp,
+                    selectedFolderPath
                 );
 
                 cls_00_ProcessMessages.AddProcessDuration(processDurations, msg, processStopwatch);
@@ -1351,7 +1353,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                         Stopwatch modelGenerateStopwatch = Stopwatch.StartNew();
 
                         bool generated = cls_00_SaveJson.TrySaveJson(
-                            isSpanish, modelJsonInfo.JsonData, projectCode, strRootFolderName, info.GetJsonFileNameParamDataExp(modelJsonInfo.FileName)
+                            isSpanish, modelJsonInfo.JsonData, projectCode, strRootFolderName, info.GetJsonFileNameParamDataExp(modelJsonInfo.FileName),
+                            selectedFolderPath
                         );
 
                         cls_00_ProcessMessages.AddProcessDuration(

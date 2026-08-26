@@ -68,7 +68,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             // -------------------------------
 
             cls_00_MainAteneaParamCheckExp.MainAteneaParamCheckExp(
-                selectedFiles.ToArray(), projectCode, startTime, info, ateneaEndpoints, uiTexts, isSpanish
+                selectedFiles.ToArray(), selectedFolderPath, projectCode, startTime, info, ateneaEndpoints, uiTexts, isSpanish
             );
         }
 

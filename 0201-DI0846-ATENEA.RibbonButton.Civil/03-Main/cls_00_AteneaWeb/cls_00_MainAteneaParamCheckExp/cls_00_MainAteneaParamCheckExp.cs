@@ -108,6 +108,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 
         public static async Task MainAteneaParamCheckExp(
             string[] selectedFiles,
+            string selectedFolderPath,
             string projectCode,
             DateTime startTime,
             CadSessionInfo info,
@@ -466,7 +467,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 );
                 // Exportamos
                 cls_00_SaveJson.TrySaveJson(
-                    isSpanish, dictDataByFileToJson, projectCode, strRootFolderName, strJsonFileNameParamCheckExp
+                    isSpanish, dictDataByFileToJson, projectCode, strRootFolderName, strJsonFileNameParamCheckExp,
+                    selectedFolderPath
                 );
 
                 // Añadimos
@@ -516,7 +518,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                     processStopwatch = Stopwatch.StartNew();
 
                     cls_00_SaveJson.TrySaveJson(
-                        isSpanish, dictDataSetToJson, projectCode, strRootFolderName, strJsonFileNameParamCheckSet
+                        isSpanish, dictDataSetToJson, projectCode, strRootFolderName, strJsonFileNameParamCheckSet,
+                        selectedFolderPath
                     );
 
                     // Añadimos

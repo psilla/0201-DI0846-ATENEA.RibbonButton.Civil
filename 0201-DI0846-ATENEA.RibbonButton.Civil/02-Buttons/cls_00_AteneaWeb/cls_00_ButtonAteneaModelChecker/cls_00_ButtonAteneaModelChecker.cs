@@ -108,7 +108,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                 // -------------------------------
 
                 cls_00_MainAteneaModelChecker.MainAteneaModelChecker(
-                    selectedFiles.ToArray(), projectCode, selectedOptions, 
+                    selectedFiles.ToArray(), selectedFolderPath, projectCode, selectedOptions, 
                     startTime, info, ateneaEndpoints, uiTexts, isSpanish
                 );
             }

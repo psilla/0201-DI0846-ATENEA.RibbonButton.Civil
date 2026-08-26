@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.ApplicationServices;
@@ -69,24 +70,9 @@ namespace TYPSA.PS.RibbonButton.Civil
             progressBarForm.ProgressValue = percentage;
         }
 
-        //public static class AteneaModelCheckerDefaults
-        //{
-        //    // -----------------------------
-        //    // Fonts
-        //    // -----------------------------
-
-        //    public const string ExpectedPaperTextFont = "ISOCPEUR";
-        //}
-
-        //public class WarningCheckLogResult
-        //{
-        //    public string FileName { get; set; }
-        //    public string CheckName { get; set; }
-        //    public string Message { get; set; }
-        //}
-
         public static async Task MainAteneaModelChecker(
             string[] selectedFiles,
+            string selectedFolderPath,
             string projectCode,
             List<string> selectedOptions,
             DateTime startTime,
@@ -146,16 +132,16 @@ namespace TYPSA.PS.RibbonButton.Civil
             startTime = DateTime.Now;
 
             // -------------------------------
-            // Validar Datos Proyecto
+            // Validar Datos Proyecto SSO
             // -------------------------------
 
-            Dictionary<string, object> dictProjectDataToVal = GetProjectDataDictionary(
-                projectCode, softwareLanguage
+            Dictionary<string, object> dictProjectDataToVal = GetProjectDataDictionarySSO(
+                projectCode
             );
 #if CIVIL2020 || CIVIL2021 || CIVIL2022 || CIVIL2023 || CIVIL2024 || CIVIL2025 || CIVIL2026
             // Validamos Datos de Proyecto
-            if (!await cls_00_ValidateProjectInfo.ValidateProjectDataAsync(
-                strEndpointProjectDataUrl, dictProjectDataToVal, keySoftwareVersion, keySoftwareLanguage, isSpanish
+            if (!await cls_00_ValidateProjectInfo.ValidateProjectDataAsyncSSO(
+                ateneaEndpoints.EndpointProjectDataUrlSso, dictProjectDataToVal, isSpanish, cls_00_AteneaSession.AccessToken
             )) return;
 #endif
 
@@ -460,7 +446,8 @@ namespace TYPSA.PS.RibbonButton.Civil
                 );
                 // Exportamos
                 cls_00_SaveJson.TrySaveJson(
-                    isSpanish, dictDataByFileToJson, projectCode, info.RootFolderName, info.JsonFileNameDataExtraction
+                    isSpanish, dictDataByFileToJson, projectCode, info.RootFolderName, info.JsonFileNameDataExtraction,
+                    selectedFolderPath
                 );
 
                 // Añadimos
@@ -572,7 +559,7 @@ namespace TYPSA.PS.RibbonButton.Civil
 
                     // Html
                     cls_00_ExportAteneaCheckToHtml.ExportToHtml(
-                        exportData, warningChecksLog, projectCode, totalFiles, processedFiles
+                        selectedFolderPath, exportData, warningChecksLog, projectCode, totalFiles, processedFiles
                     );
                 }
                 else
