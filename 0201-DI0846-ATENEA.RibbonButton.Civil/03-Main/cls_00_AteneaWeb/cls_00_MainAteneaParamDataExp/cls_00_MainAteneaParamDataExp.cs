@@ -14,6 +14,7 @@ using TYPSA.SharedLib.EndPoints;
 using TYPSA.SharedLib.Excel;
 using TYPSA.SharedLib.Json;
 using TYPSA.SharedLib.UserForms;
+using static TYPSA.PS.RibbonButton.Civil.cls_00_PrepareParamWebDataAsync;
 using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 
@@ -21,30 +22,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 {
     internal class cls_00_MainAteneaParamDataExp
     {
-        private static List<Dictionary<string, object>> FilterDataByFileNames(
-            List<Dictionary<string, object>> dataByFileList,
-            IEnumerable<string> fileNames
-        )
-        {
-            HashSet<string> fileNameSet = new HashSet<string>(
-                fileNames, StringComparer.OrdinalIgnoreCase
-            );
-
-            return dataByFileList
-                .Where(modelEntry =>
-                {
-                    string fileName = modelEntry.TryGetValue(
-                        cls_00_AteneaJson.FileName, out object fileNameObj
-                    )
-                        ? fileNameObj?.ToString()
-                        : null;
-
-                    return !string.IsNullOrWhiteSpace(fileName) &&
-                           fileNameSet.Contains(fileName);
-                })
-                .ToList();
-        }
-
+       
         private static void ShowGlobalUploadResultMessage(
             IEnumerable<string> successfullyUploadedFileNames,
             IEnumerable<string> failedFileNames,
@@ -200,26 +178,6 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             );
 
             return false;
-        }
-
-        private static void ShowNoParameterSetMessage(
-            bool isSpanish
-        )
-        {
-            MessageBox.Show(
-                isSpanish
-                    ? "No existe un Conjunto de Parámetros.\n\n" +
-                      "Como no se ha creado ni validado ningún Conjunto de Parámetros, el sistema no puede determinar\n" +
-                      "qué parámetros deben exportarse desde los modelos seleccionados."
-                    : "There is no existing Parameter Set.\n\n" +
-                      "Since no Parameter Set has been created or validated, the system cannot determine\n" +
-                      "which parameters should have their values exported from the selected models.",
-                isSpanish
-                    ? "Conjunto de Parámetros No Disponible"
-                    : "Parameter Set Not Available",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
         }
 
         private static bool? boolParamDataExpOptions(
@@ -415,53 +373,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 : "Select the properties whose values you want to extract from the elements belonging to the selected Property Sets.";
         }
 
-        private static bool ValidateJsonData(
-            Dictionary<string, object> jsonData,
-            bool isSpanish
-        )
-        {
-            // Validamos
-            if (jsonData == null || jsonData.Count == 0)
-            {
-                MessageBox.Show(
-                    isSpanish
-                        ? "No se ha obtenido información del Set de parámetros."
-                        : "No parameter Set information was retrieved.",
-                    isSpanish ? "Set no disponible" : "Set unavailable",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning
-                );
-
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool ValidateKeyParamCheck(
-            Dictionary<string, object> jsonData,
-            string keyParamCheck,
-            bool isSpanish
-        )
-        {
-            // Validamos
-            if (
-                !jsonData.ContainsKey(keyParamCheck) || jsonData[keyParamCheck] == null
-            )
-            {
-                MessageBox.Show(
-                    isSpanish
-                        ? $"El JSON no contiene la propiedad '{keyParamCheck}'."
-                        : $"The JSON does not contain the property '{keyParamCheck}'.",
-                    isSpanish ? "Información no encontrada" : "Information not found",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning
-                );
-
-                return false;
-            }
-
-            return true;
-        }
-
+     
         private static void SkipNullFile(
             bool isSpanish,
             string fileName,
@@ -593,7 +505,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Obtener Property Sets del Set Web
             // -------------------------------
 
-            List<string> existingPsetNamesInSet = cls_00_ParamImpMainWeb_Async.GetPsetNames(
+            List<string> existingPsetNamesInSet = cls_00_ParamImpMainWeb.GetPsetNames(
                 civilParamCheckFromSet, keyPsetName
             ).OrderBy(x => x).ToList();
             // Validamos
@@ -668,8 +580,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             string selectedFolderPath,
             string projectCode,
             DateTime startTime,
-            CadSessionInfo info,
-            cls_00_AteneaEndPointsCivil ateneaEndpoints,
+            CadSessionInfo infoCad,
             UiTexts uiTexts,
             bool isSpanish
         )
@@ -718,19 +629,23 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Obtener informacion
             // -------------------------------
 
-            string keySoftwareVersion = cls_00_AteneaJson.CivilVersion;
-            string keySoftwareLanguage = cls_00_AteneaJson.CivilLanguage;
             string keyParamCheck = cls_00_AteneaJson.CivilParamCheck;
             string keyPsetName = cls_00_AteneaJson.PsetName;
             string keyParamData = cls_00_AteneaJson.CivilParamData;
             string keyDataByFileName = cls_00_AteneaJson.DataByFileName;
             string keyFileName = cls_00_AteneaJson.FileName;
+
+            cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
             string strEndpointGetSetUrl = ateneaEndpoints.EndpointGetSetUrl;
             string strEndpointGetCustomSetUrl = ateneaEndpoints.EndpointGetCustomSetUrl;
             string strEndpointDataByFileElementUrl = ateneaEndpoints.EndpointDataByFileElementUrl;
-            string strUserName = info.UserName;
-            string strRootFolderName = info.RootFolderName;
-            string strJsonFileNameParamDataExp = info.JsonFileNameParamDataExp;
+            string strEndpointPostCustomSetUrl = ateneaEndpoints.EndpointPostCustomSetUrl;
+
+            string strRootFolderName = infoCad.RootFolderName;
+            string strJsonFileNameParamDataExp = infoCad.JsonFileNameParamDataExp;
+
+            string strAccessToken = cls_00_AteneaSession.AccessToken;
+            string strEmail = cls_00_AteneaSession.Email;
 
             // -------------------------------
             // Reiniciamos cronometro global
@@ -761,8 +676,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Preparar informacion Web
             // -------------------------------
 
-            ParamExpPreparedData preparedData = await cls_00_ParamExpMainWeb_Async.ParamExpMainWebAsync(
-                projectCode, info, ateneaEndpoints, selectedEndpoint, isSpanish, validateExistingSet: true
+            ParamExpPreparedData preparedData = await ParamExpMainWebAsync(
+                projectCode, infoCad, ateneaEndpoints, selectedEndpoint, isSpanish, validateExistingSet: true
             );
             // Validamos
             if (preparedData == null) return;
@@ -964,7 +879,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                                     // -------------------------------
 
                                     Dictionary<string, object> modelDataToJson = GetFinalJsonDictionary(
-                                        projectCode, softwareLanguage, modelData
+                                        projectCode, softwareLanguage, strEmail, modelData, infoCad
                                     );
 
                                     // -------------------------------
@@ -1064,7 +979,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 processStopwatch = Stopwatch.StartNew();
 
                 Dictionary<string, object> dictDataByFileToJson = GetFinalJsonDictionary(
-                    projectCode, softwareLanguage, dataJsonByModel
+                    projectCode, softwareLanguage, strEmail, dataJsonByModel, infoCad
                 );
 
                 cls_00_ProcessMessages.AddProcessDuration(processDurations, msg, processStopwatch);
@@ -1121,36 +1036,75 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 List<Dictionary<string, object>> dictDataByFileToJsonToList = cls_00_GetDataListFromJson.ConvertJsonToDictionaryList(
                     dictDataByFileToJson, keyDataByFileName, isSpanish
                 );
+                // Validamos
+                if (dictDataByFileToJsonToList == null || !dictDataByFileToJsonToList.Any()) return;
 
                 // Añadimos
                 cls_00_ProcessMessages.AddProcessDuration(processDurations, msg, processStopwatch);
 
-                // Validamos
-                if (dictDataByFileToJsonToList == null || !dictDataByFileToJsonToList.Any()) return;
-
                 // -----------------------------
-                // Borrar datos previos
+                // Consultar datos existentes
                 // -----------------------------
 
-                string msgDeletePreviousData = cls_00_ProcessMessages.ShowProcessMessage(
-                    isSpanish, cls_00_ProcessMessages.DeletePreviousModelData
+                ExistingDataResult existingData = await cls_00_GetExistingData.GetExistingDataByFileAsync(
+                    strAccessToken, isSpanish, dictDataByFileToJson, strEndpointDataByFileElementUrl
                 );
+                // Validamos consulta
+                if (!existingData.Success) return;
 
-                Stopwatch deletePreviousDataStopwatch = Stopwatch.StartNew();
+                // -----------------------------
+                // Configuracion debug
+                // -----------------------------
 
-                try
+                bool existingDataShow = false;
+
+                // -----------------------------
+                // Mostrar datos existentes
+                // -----------------------------
+
+                cls_00_GetExistingData.ShowExistingData(existingData, existingDataShow);
+
+                // -----------------------------
+                // Validar si existen datos
+                // -----------------------------
+
+                if (existingData.HasData)
                 {
-                    bool deleted = await cls_00_DeleteData.DeleteAll(
-                        isSpanish, dictDataByFileToJson, strEndpointDataByFileElementUrl
+                    // -----------------------------
+                    // Obtener informacion a borrar
+                    // -----------------------------
+
+                    List<Dictionary<string, object>> dataByFileName = cls_00_GetModelData.GetDeleteAllExistingData(
+                        existingData.Json
                     );
                     // Validamos
-                    if (!deleted) return;
-                }
-                finally
-                {
-                    cls_00_ProcessMessages.AddProcessDuration(
-                        processDurations, msgDeletePreviousData, deletePreviousDataStopwatch
-                    );
+                    if (dataByFileName != null && dataByFileName.Count > 0)
+                    {
+                        // -----------------------------
+                        // Borrar datos previos
+                        // -----------------------------
+
+                        string msgDeletePreviousData = cls_00_ProcessMessages.ShowProcessMessage(
+                            isSpanish, cls_00_ProcessMessages.DeletePreviousModelData
+                        );
+
+                        Stopwatch deletePreviousDataStopwatch = Stopwatch.StartNew();
+
+                        try
+                        {
+                            bool deleted = await cls_00_DeleteData.DeleteAllByEndpoint(
+                                strAccessToken, isSpanish, dictDataByFileToJson, strEndpointDataByFileElementUrl
+                            );
+                            // Validamos
+                            if (!deleted) return;
+                        }
+                        finally
+                        {
+                            cls_00_ProcessMessages.AddProcessDuration(
+                                processDurations, msgDeletePreviousData, deletePreviousDataStopwatch
+                            );
+                        }
+                    }
                 }
 
                 // -----------------------------
@@ -1169,8 +1123,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 try
                 {
                     globalSendResult = await cls_00_SendJsonByChunk.SendJsonByChunk_ParamAsync(
-                        isSpanish, dictDataByFileToJsonToList, dictDataByFileToJson, strEndpointDataByFileElementUrl,
-                        keyParamData, keySoftwareVersion, keySoftwareLanguage, chunkSize: 5000
+                        strAccessToken, isSpanish, dictDataByFileToJsonToList, dictDataByFileToJson, 
+                        strEndpointDataByFileElementUrl, keyParamData, chunkSize: 5000
                     );
                 }
                 // catch
@@ -1242,261 +1196,14 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 // Gestionar fallo del envio global
                 // -----------------------------
 
-                if (!globalSendResult.DataUploadSucceeded)
-                {
-                    // -----------------------------
-                    // Obtener modelos para reintentar
-                    // -----------------------------
-
-                    HashSet<string> retryFileNames = new HashSet<string>(
-                        globalSendResult.FailedFileNames, StringComparer.OrdinalIgnoreCase
-                    );
-                    // Añadimos
-                    retryFileNames.UnionWith(globalSendResult.PendingFileNames);
-
-                    // -----------------------------
-                    // Obtener JSON de modelos para reintentar
-                    // -----------------------------
-
-                    List<(string FileName, Dictionary<string, object> JsonData)> retryJsonDataByModel =
-                        jsonDataToSendByModel.Where(modelData => !string.IsNullOrWhiteSpace(modelData.FileName) &&
-                            retryFileNames.Contains(modelData.FileName)
-                        ).ToList();
-
-                    // -----------------------------
-                    // Validar modelos para reintentar
-                    // -----------------------------
-
-                    if (!retryJsonDataByModel.Any())
-                    {
-                        MessageBox.Show(
-                            isSpanish
-                                ? "No se pudieron localizar los datos de los modelos que deben reintentarse."
-                                : "The data for the models to retry could not be located.",
-                            isSpanish ? "Error" : "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error
-                        );
-                        return;
-                    }
-
-                    // -----------------------------
-                    // Borrar datos parciales de modelos fallidos
-                    // -----------------------------
-
-                    if (globalSendResult.FailedFileNames.Any())
-                    {
-                        List<Dictionary<string, object>> failedDataByFileList = FilterDataByFileNames(
-                            dictDataByFileToJsonToList, globalSendResult.FailedFileNames
-                        );
-                        // Validamos
-                        if (failedDataByFileList == null || !failedDataByFileList.Any()
-                        )
-                        {
-                            MessageBox.Show(
-                                isSpanish
-                                    ? "No se pudieron localizar los datos de los modelos fallidos."
-                                    : "The failed model data could not be located.",
-                                isSpanish ? "Error" : "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                            return;
-                        }
-
-                        bool partialDataDeleted = await cls_00_DeleteData.DeleteByModelParamData(
-                            isSpanish, failedDataByFileList, dictDataByFileToJson,
-                            strEndpointDataByFileElementUrl, keyParamData
-                        );
-                        // Validamos
-                        if (!partialDataDeleted) return;
-                    }
-
-                    // -----------------------------
-                    // Enviar individualmente modelos fallidos y pendientes
-                    // -----------------------------
-
-                    string msgSendModels = cls_00_ProcessMessages.ShowProcessMessage(
-                        isSpanish, cls_00_ProcessMessages.SendRetryModelsToServer
-                    );
-
-                    Stopwatch sendModelsStopwatch = Stopwatch.StartNew();
-
-                    // -----------------------------
-                    // Control de resultados
-                    // -----------------------------
-
-                    List<string> failedModels = new List<string>();
-
-                    // -----------------------------
-                    // Iterar modelos fallidos y pendientes
-                    // -----------------------------
-
-                    foreach (
-                        (string FileName, Dictionary<string, object> JsonData) modelJsonInfo
-                        in retryJsonDataByModel
-                    )
-                    {
-                        // -----------------------------
-                        // Crear tiempos del modelo
-                        // -----------------------------
-
-                        Dictionary<string, TimeSpan> modelSendDurations = new Dictionary<string, TimeSpan>();
-
-                        // -----------------------------
-                        // Exportar JSON del modelo
-                        // -----------------------------
-
-                        string msgGenerateModel = cls_00_ProcessMessages.ShowProcessMessage(
-                            isSpanish, cls_00_ProcessMessages.GenerateJsonByModel, modelJsonInfo.FileName
-                        );
-
-                        Stopwatch modelGenerateStopwatch = Stopwatch.StartNew();
-
-                        bool generated = cls_00_SaveJson.TrySaveJson(
-                            isSpanish, modelJsonInfo.JsonData, projectCode, strRootFolderName, info.GetJsonFileNameParamDataExp(modelJsonInfo.FileName),
-                            selectedFolderPath
-                        );
-
-                        cls_00_ProcessMessages.AddProcessDuration(
-                            modelSendDurations, msgGenerateModel, modelGenerateStopwatch
-                        );
-
-                        /*
-                         * Aunque falle la exportación local, continuamos.
-                         * El envío utiliza los datos almacenados en memoria.
-                         */
-
-                        // -----------------------------
-                        // Obtener datos del modelo actual
-                        // -----------------------------
-
-                        List<Dictionary<string, object>> currentModelDataList = FilterDataByFileNames(
-                            dictDataByFileToJsonToList, new[] { modelJsonInfo.FileName }
-                        );
-                        // Validamos
-                        if (currentModelDataList == null || !currentModelDataList.Any()
-                        )
-                        {
-                            failedModels.Add(modelJsonInfo.FileName);
-
-                            MessageBox.Show(
-                                isSpanish
-                                    ? $"No se pudieron localizar los datos del modelo " +
-                                      $"'{modelJsonInfo.FileName}'."
-                                    : $"The data for model " +
-                                      $"'{modelJsonInfo.FileName}' could not be located.",
-                                isSpanish ? "Datos no encontrados" : "Data not found",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error
-                            );
-                            continue;
-                        }
-
-                        // -----------------------------
-                        // Avisar envío del modelo
-                        // -----------------------------
-
-                        string msgSendModel = cls_00_ProcessMessages.ShowProcessMessage(
-                            isSpanish, cls_00_ProcessMessages.SendJsonByModelToServer, modelJsonInfo.FileName
-                        );
-
-                        Stopwatch modelSendStopwatch = Stopwatch.StartNew();
-
-                        JsonUploadResult modelSendResult = null;
-
-                        // -----------------------------
-                        // Enviar unicamente este modelo
-                        // -----------------------------
-
-                        try
-                        {
-                            // No enviamos el Set personalizado por cada modelo
-                            modelSendResult = await cls_00_SendJsonByChunk.SendJsonByChunk_ParamAsync(
-                            isSpanish, currentModelDataList, modelJsonInfo.JsonData, strEndpointDataByFileElementUrl, 
-                            keyParamData, keySoftwareVersion, keySoftwareLanguage, chunkSize: 5000
-                        );
-                        }
-                        catch
-                        {
-                            modelSendResult = null;
-                        }
-                        finally
-                        {
-                            // Añadimos el tiempo del intento de envío
-                            cls_00_ProcessMessages.AddProcessDuration(
-                                modelSendDurations, msgSendModel, modelSendStopwatch
-                            );
-                        }
-
-                        // -----------------------------
-                        // Tiempo total del modelo
-                        // -----------------------------
-
-                        TimeSpan modelSendTotal = TimeSpan.FromTicks(
-                            modelSendDurations.Values.Sum(x => x.Ticks)
-                        );
-
-                        modelSendDurations["Total"] = modelSendTotal;
-
-                        sendDurationsByModel[modelJsonInfo.FileName] = modelSendDurations;
-
-                        // -----------------------------
-                        // Validar resultado del reenvío
-                        // -----------------------------
-
-                        bool modelUploadedCorrectly = modelSendResult != null &&
-                            modelSendResult.DataUploadSucceeded &&
-                            modelSendResult.SucceededFileNames.Contains(modelJsonInfo.FileName);
-                        // Validamos
-                        if (!modelUploadedCorrectly)
-                        {
-                            failedModels.Add(modelJsonInfo.FileName);
-
-                            MessageBox.Show(
-                                isSpanish
-                                    ? $"No se pudo enviar correctamente la información del modelo " +
-                                      $"'{modelJsonInfo.FileName}'."
-                                    : $"The information for model " +
-                                      $"'{modelJsonInfo.FileName}' could not be uploaded successfully.",
-                                isSpanish ? "Error de envío" : "Send error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error
-                            );
-                        }
-                    }
-
-                    // -----------------------------
-                    // Tiempo total del reenvío
-                    // -----------------------------
-
-                    cls_00_ProcessMessages.AddProcessDuration(
-                        processDurations, msgSendModels, sendModelsStopwatch
-                    );
-
-                    // -----------------------------
-                    // Validar resultado final
-                    // -----------------------------
-
-                    bool allModelsUploadedCorrectly = failedModels.Count == 0;
-                    // Validamos
-                    if (!allModelsUploadedCorrectly)
-                    {
-                        string failedModelsText = string.Join(Environment.NewLine, failedModels.Select(x => $"• {x}")
-                        );
-
-                        MessageBox.Show(
-                            isSpanish
-                                ? $"Los siguientes modelos no pudieron enviarse:\n\n" +
-                                  $"{failedModelsText}"
-                                : $"The following models could not be uploaded:\n\n" +
-                                  $"{failedModelsText}",
-                            isSpanish
-                                ? "Modelos no enviados"
-                                : "Models not uploaded",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error
-                        );
-                        // Finalizamos
-                        return;
-                    }
-                }
+                bool retrySucceeded = await cls_00_HandleGlobalSendFailureAsync.HandleGlobalSendFailureAsync(
+                    globalSendResult, jsonDataToSendByModel, dictDataByFileToJsonToList, dictDataByFileToJson, 
+                    strAccessToken, strEndpointDataByFileElementUrl, keyParamData, projectCode, strRootFolderName, 
+                    fileName => infoCad.GetJsonFileNameParamDataExp(fileName), 
+                    selectedFolderPath, isSpanish, processDurations, sendDurationsByModel
+                );
+                // Validamos
+                if (!retrySucceeded) return;
 
                 // -----------------------------
                 // Enviar Set personalizado
@@ -1504,10 +1211,31 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 
                 if (!selectionModeParFromSetBool && selectedProperties != null && selectedProperties.Any())
                 {
-                    bool customSetSent = await cls_00_SendJsonByChunk.SendCustomParamSet(
-                        isSpanish, ateneaEndpoints.EndpointPostCustomSetUrl, dictDataByFileToJson, keyParamCheck, selectedProperties
+                    // -------------------------------
+                    // Obtener datos de cabecera
+                    // -------------------------------
+
+                    string ateneaVersion = dictDataByFileToJson.TryGetValue(cls_00_AteneaJson.AteneaVersion, out object ateneaVersionObj)
+                        ? ateneaVersionObj?.ToString()
+                        : null;
+                    // Validamos
+                    if (string.IsNullOrWhiteSpace(ateneaVersion)) return;
+           
+                    // -----------------------------
+                    // Construir payload 
+                    // -----------------------------
+
+                    Dictionary<string, object> dictToVal = cls_00_SendJsonByChunk.GetCustomParamSetPayloadCivil(
+                        projectCode, ateneaVersion, keyParamCheck, selectedProperties
                     );
 
+                    // -----------------------------
+                    // Enviar Set personalizado
+                    // -----------------------------
+
+                    bool customSetSent = await cls_00_PostParamSetCustom.SendCustomParamSet(
+                        strAccessToken, isSpanish, strEndpointPostCustomSetUrl, dictToVal
+                    );
                     // Validamos
                     if (!customSetSent) return;
                 }
@@ -1525,7 +1253,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 // -------------------------------
 
                 cls_00_ExportProcessTimesToHtml.ExportProcessTimesToHtml(
-                    processDurations, projectCode, strUserName, totalFiles, processedFiles, isSpanish,
+                    selectedFolderPath, processDurations, projectCode, preparedData.UserNameBySso, totalFiles, processedFiles, isSpanish,
                     processDurationsByModel, sendDurationsByModel, includeModelDetails: true
                 );
 

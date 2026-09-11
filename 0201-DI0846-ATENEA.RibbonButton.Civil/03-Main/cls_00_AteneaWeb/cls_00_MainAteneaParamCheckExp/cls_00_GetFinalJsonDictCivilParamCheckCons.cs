@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
+using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.EndPoints;
+using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
 
 namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 {
@@ -299,8 +300,10 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
         }
 
         public static Dictionary<string, object> GetFinalJsonPsetSet(
+            CadSessionInfo infoCad,
             string projectCode,
             string civilLanguage,
+            string strEmail,
             List<Dictionary<string, object>> dataJsonByModel
         )
         {
@@ -389,7 +392,9 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Crear JSON final
             // -----------------------------
 
-            Dictionary<string, object> baseDict = GetProjectDataDictionary(projectCode, civilLanguage);
+            Dictionary<string, object> baseDict = GetProjectDataDictionary(
+                projectCode, civilLanguage, strEmail, infoCad
+            );
 
             // Añadimos info
             baseDict.Add(keyParamCheck,civilParamCheck);
@@ -399,8 +404,10 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
         }
 
         public static Dictionary<string, object> GetFinalJsonPsetSet(
+            CadSessionInfo infoCad,
             string projectCode,
             string civilLanguage,
+            string strEmail,
             List<Dictionary<string, object>> dataJsonByModelFiltered,
             List<Dictionary<string, object>> civilParamCheckFromSet,
             int currentSetStatus,
@@ -440,7 +447,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 
                 // Creamos JSON final con el Set existente
                 Dictionary<string, object> existingSetDict = GetParamSetDictionary(
-                    projectCode, civilLanguage, updatedSetStatus
+                    projectCode, civilLanguage, strEmail, updatedSetStatus, infoCad
                 );
                 // Añadimos
                 existingSetDict.Add(keyParamCheck, civilParamCheck);
@@ -453,7 +460,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Obtener Psets del Set Web
             // -------------------------------
 
-            HashSet<string> psetNamesFromSet = cls_00_ParamImpMainWeb_Async.GetPsetNames(
+            HashSet<string> psetNamesFromSet = cls_00_ParamImpMainWeb.GetPsetNames(
                 civilParamCheck, keyPsetName
             );
 
@@ -525,7 +532,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             updatedSetStatus = 2;
 
             Dictionary<string, object> baseDict = GetParamSetDictionary(
-                projectCode, civilLanguage, updatedSetStatus
+                projectCode, civilLanguage, strEmail, updatedSetStatus, infoCad
             );
 
             baseDict.Add(keyParamCheck, civilParamCheck);

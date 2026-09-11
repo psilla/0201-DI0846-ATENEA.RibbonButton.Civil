@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Autodesk.AutoCAD.Runtime;
 using TYPSA.PS.RibbonButton.Civil.Source.Class.Main;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Civil.Buttons;
-using TYPSA.SharedLib.Civil.Main;
-using TYPSA.SharedLib.EndPoints;
 using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
 
 namespace TYPSA.PS.RibbonButton.Civil
@@ -28,17 +25,14 @@ namespace TYPSA.PS.RibbonButton.Civil
         }
 
         [CommandMethod(RibbonCommands.ButtonAteneaParamDataExp)]
-        public static void PropExportBackToJSON()
+        public static void ButtonAteneaParamDataExp()
         {
             // ---------------------------------
             // Obtener datos de usuario
             // ---------------------------------
 
             bool userData = cls_00_GetUserData.GetUserData(
-                out string projectCode,
-                out List<string> selectedFiles,
-                out string selectedFolderPath,
-                out DateTime startTime,
+                out string projectCode, out List<string> selectedFiles, out string selectedFolderPath, out DateTime startTime,
                 customPathLabel: "Please, paste the folder containing the DWG files to analyze"
             );
             // Validamos
@@ -48,16 +42,15 @@ namespace TYPSA.PS.RibbonButton.Civil
             // Obtener informacion
             // ---------------------------------
 
-            CadSessionInfo info = GetCivilSessionInfo();
-            cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
-
+            CadSessionInfo infoCad = GetCivilSessionInfo();
+            
             // ---------------------------------
             // Detectar idioma 
             // ---------------------------------
 
             bool isSpanish =
-                (info.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
-                (info.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
+                (infoCad.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
+                (infoCad.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
 
             // ---------------------------------
             // Texto UI segun idioma
@@ -70,7 +63,8 @@ namespace TYPSA.PS.RibbonButton.Civil
             // -------------------------------
 
             cls_00_MainAteneaParamDataExp.MainAteneaParamDataExp(
-                selectedFiles.ToArray(), selectedFolderPath, projectCode, startTime, info, ateneaEndpoints, uiTexts, isSpanish
+                selectedFiles.ToArray(), selectedFolderPath, projectCode, startTime, 
+                infoCad, uiTexts, isSpanish
             );
         }
 

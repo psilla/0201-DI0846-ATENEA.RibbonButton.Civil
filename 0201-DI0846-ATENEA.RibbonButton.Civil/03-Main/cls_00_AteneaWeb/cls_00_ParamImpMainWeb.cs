@@ -4,15 +4,13 @@ using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using TYPSA.PS.RibbonButton.Civil.Source.Class.Main;
-using TYPSA.SharedLib.Autocad.Main;
+using TYPSA.SharedLib.Civil.SetDataFromJson;
 using TYPSA.SharedLib.EndPoints;
 using TYPSA.SharedLib.UserForms;
-using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
-using TYPSA.SharedLib.Civil.SetDataFromJson;
 
 namespace TYPSA.PS.RibbonButton.Civil
 {
-    internal class cls_00_ParamImpMainWeb_Async
+    internal class cls_00_ParamImpMainWeb
     {
         private static void ShowPropertySetsNotFoundMessage(bool isSpanish)
         {
@@ -56,192 +54,6 @@ namespace TYPSA.PS.RibbonButton.Civil
             );
         }
 
-        private static bool ValidateJsonData(
-            Dictionary<string, object> jsonData,
-            string keyParamCheck,
-            bool isSpanish
-        )
-        {
-            // -------------------------------
-            // Validar data
-            // -------------------------------
-
-            if (jsonData == null || jsonData.Count == 0)
-            {
-                MessageBox.Show(
-                    isSpanish
-                        ? "No se ha obtenido información del Set de parámetros."
-                        : "No parameter Set information was retrieved.",
-                    isSpanish ? "Set no disponible" : "Set unavailable",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning
-                );
-
-                return false;
-            }
-
-            // -------------------------------
-            // Validar key
-            // -------------------------------
-
-            if (!jsonData.ContainsKey(keyParamCheck) || jsonData[keyParamCheck] == null)
-            {
-                MessageBox.Show(
-                    isSpanish
-                        ? $"El JSON no contiene la propiedad '{keyParamCheck}'."
-                        : $"The JSON does not contain the property '{keyParamCheck}'.",
-                    isSpanish ? "Información no encontrada" : "Information not found",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning
-                );
-
-                return false;
-            }
-
-            return true;
-        }
-
-        private static void ShowNoParameterSetMessage(
-            bool isSpanish
-        )
-        {
-            // Mensaje
-            MessageBox.Show(
-                isSpanish
-                ? "No hay un Set de Parámetros validado disponible.\n" +
-                  "No se procederá a la importación hasta que el set sea validado nuevamente por el responsable de proyecto."
-                : "There is no validated Parameter Set available.\n" +
-                  "The import will not proceed until the set has been revalidated by the Project Manager.",
-                isSpanish
-                ? "Set de Parámetros No Validado"
-                : "Parameter Set Not Validated",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning
-            );
-        }
-
-
-        public class ParamImpPreparedData
-        {
-            public string CivilVersion { get; set; }
-            public string UserName { get; set; }
-            public string CivilLanguage { get; set; }
-            public string DateTimeNow { get; set; }
-            public string AteneaVersion { get; set; }
-            public Dictionary<string, object> JsonData { get; set; }
-            public int CurrentSetStatus { get; set; }
-        }
-
-        public static ParamImpPreparedData ParamImpMainWeb_Async(
-            string projectCode,
-            CadSessionInfo info,
-            cls_00_AteneaEndPointsCivil ateneaEndpoints,
-            bool isSpanish
-        )
-        {
-            // -------------------------------
-            // Normalizar idioma
-            // -------------------------------
-
-            string softwareLanguage = isSpanish ? "Spanish" : "English";
-
-            // -------------------------------
-            // Obtener informacion
-            // -------------------------------
-
-            string keySoftwareVersion = cls_00_AteneaJson.CivilVersion;
-            string keySoftwareLanguage = cls_00_AteneaJson.CivilLanguage;
-            string keyParamCheck = cls_00_AteneaJson.CivilParamCheck;
-            string strEndpointProjectDataUrl = ateneaEndpoints.EndpointProjectDataUrl;
-            string strEndpointValidateSetUrl = ateneaEndpoints.EndpointValidateSetUrl;
-            string strEndpointGetSetUrl = ateneaEndpoints.EndpointGetSetUrl;
-            string strUserName = info.UserName;
-            string strAteneaVersion = info.AteneaVersion;
-
-            // -------------------------------
-            // Validar Datos Proyecto
-            // -------------------------------
-
-            Dictionary<string, object> dictProjectDataToVal = GetProjectDataDictionary(projectCode, softwareLanguage);
-#if CIVIL2020 || CIVIL2021 || CIVIL2022 || CIVIL2023 || CIVIL2024 || CIVIL2025 || CIVIL2026
-            // Validamos Datos de Proyecto
-            bool isValid = cls_00_ValidateProjectInfo.ValidateProjectDataAsync(
-                strEndpointProjectDataUrl, dictProjectDataToVal, keySoftwareVersion, keySoftwareLanguage, isSpanish
-            ).GetAwaiter().GetResult();
-            // Validamos
-            if (!isValid) return null;
-#endif
-
-            // -------------------------------
-            // Validar Status Set de Parametros
-            // -------------------------------
-
-            Dictionary<string, object> dictSetToVal = GetSetStatusDictionary(projectCode);
-#if CIVIL2020 || CIVIL2021 || CIVIL2022 || CIVIL2023 || CIVIL2024 || CIVIL2025 || CIVIL2026
-            // Validamos 
-            int currentSetStatus = cls_00_ValidateParamSetStatus.ValidateSetStatusAsync(
-                dictSetToVal, strEndpointValidateSetUrl, isSpanish
-            ).GetAwaiter().GetResult();
-            // Validamos
-            if (currentSetStatus == -1) return null;
-#endif
-
-            // -------------------------------
-            // Validar Status Set de Parametros
-            // -------------------------------
-
-            if (currentSetStatus != 3)
-            {
-                ShowNoParameterSetMessage(isSpanish);
-                return null;
-            }
-
-            // -------------------------------
-            // Cargar Set JSON desde API
-            // -------------------------------
-
-            Dictionary<string, object> jsonSetDataFromWeb = null;
-#if CIVIL2020 || CIVIL2021 || CIVIL2022 || CIVIL2023 || CIVIL2024 || CIVIL2025 || CIVIL2026
-            // try
-            try
-            {
-                // Obtenemos el objeto desde el JSON
-                jsonSetDataFromWeb = cls_00_LoadJsonFromApiPostAsync.LoadJsonFromApiPostAsync<Dictionary<string, object>>(
-                    strEndpointGetSetUrl, projectCode, strUserName, strAteneaVersion, isSpanish
-                ).GetAwaiter().GetResult();
-
-                // -------------------------------
-                // Validar data
-                // -------------------------------
-
-                if (!ValidateJsonData(jsonSetDataFromWeb, keyParamCheck, isSpanish)) return null;
-            }
-            // catch
-            catch (Exception ex)
-            {
-                // Mensaje
-                MessageBox.Show(
-                    isSpanish
-                    ? $"Error inesperado al cargar el JSON:\n{ex.Message}"
-                    : $"Unexpected error while loading the JSON:\n{ex.Message}",
-                    isSpanish ? "Error inesperado" : "Unexpected Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error
-                );
-                // Finalizamos
-                return null;
-            }
-
-            // return
-            return new ParamImpPreparedData
-            {
-                CivilVersion = info.CivilVersion,
-                UserName = info.UserName,
-                CivilLanguage = info.CivilLanguage,
-                DateTimeNow = info.DateTimeNow,
-                AteneaVersion = info.AteneaVersion,
-                JsonData = jsonSetDataFromWeb,
-                CurrentSetStatus = currentSetStatus
-            };
-        }
-#endif
-
         private static List<string> GetSelectedPsets(
             List<string> existingPsetNamesInSet,
             bool isSpanish
@@ -256,7 +68,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                 : "Select the Property Sets you want to analyze on the web";
             // return
             return cls_00_InstaForm_CheckedListBox.CheckListBoxFormSearchOut(
-                formTitle, existingPsetNamesInSet, existingPsetNamesInSet
+                formTitle, existingPsetNamesInSet
             );
         }
 
@@ -274,7 +86,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                 : "Select the Properties you want to analyze on the web";
             // return
             return cls_00_InstaForm_CheckedListBox.CheckListBoxFormSearchOut(
-                formTitle, existingPropertyNames, existingPropertyNames
+                formTitle, existingPropertyNames
             );
         }
 

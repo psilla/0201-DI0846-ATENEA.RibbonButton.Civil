@@ -19,6 +19,7 @@ using TYPSA.SharedLib.Json;
 using TYPSA.SharedLib.UserForms;
 using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
+using static TYPSA.PS.RibbonButton.Civil.cls_00_PrepareParamWebDataAsync;
 
 namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 {
@@ -111,8 +112,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             string selectedFolderPath,
             string projectCode,
             DateTime startTime,
-            CadSessionInfo info,
-            cls_00_AteneaEndPointsCivil ateneaEndpoints,
+            CadSessionInfo infoCad,
             UiTexts uiTexts,
             bool isSpanish
         )
@@ -147,8 +147,6 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Obtener informacion
             // -------------------------------
 
-            string keySoftwareVersion = cls_00_AteneaJson.CivilVersion;
-            string keySoftwareLanguage = cls_00_AteneaJson.CivilLanguage;
             string keyDataByFileName = cls_00_AteneaJson.DataByFileName;
             string keyParamCheck = cls_00_AteneaJson.CivilParamCheck;
             string keyFileName = cls_00_AteneaJson.FileName;
@@ -161,14 +159,17 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             string keyPropIsVisible = cls_00_AteneaJson.PropIsVisible;
             string keyPropIsReadOnly = cls_00_AteneaJson.PropIsReadOnly;
 
+            cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
             string strEndpointGetSetUrl = ateneaEndpoints.EndpointGetSetUrl;
             string strEndpointSetUrl = ateneaEndpoints.EndpointSetUrl;
             string strEndpointDataByFileUrl = ateneaEndpoints.EndpointDataByFileUrl;
 
-            string strUserName = info.UserName;
-            string strRootFolderName = info.RootFolderName;
-            string strJsonFileNameParamCheckExp = info.JsonFileNameParamCheckExp;
-            string strJsonFileNameParamCheckSet = info.JsonFileNameParamCheckSet;
+            string strRootFolderName = infoCad.RootFolderName;
+            string strJsonFileNameParamCheckExp = infoCad.JsonFileNameParamCheckExp;
+            string strJsonFileNameParamCheckSet = infoCad.JsonFileNameParamCheckSet;
+
+            string strAccessToken = cls_00_AteneaSession.AccessToken;
+            string strEmail = cls_00_AteneaSession.Email;
 
             // -------------------------------
             // Reiniciamos cronometro global
@@ -180,8 +181,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Preparar informacion Web
             // -------------------------------
 
-            ParamExpPreparedData preparedData = await cls_00_ParamExpMainWeb_Async.ParamExpMainWebAsync(
-                projectCode, info, ateneaEndpoints, strEndpointGetSetUrl, isSpanish, validateExistingSet: false
+            ParamExpPreparedData preparedData = await ParamExpMainWebAsync(
+                projectCode, infoCad, ateneaEndpoints, strEndpointGetSetUrl, isSpanish, validateExistingSet: false
             );
             // Validamos
             if (preparedData == null) return;
@@ -463,7 +464,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 msg = cls_00_ProcessMessages.ShowProcessMessage(isSpanish, cls_00_ProcessMessages.GenerateJson);
 
                 Dictionary<string, object> dictDataByFileToJson = GetFinalJsonDictionary(
-                    projectCode, softwareLanguage, dataJsonByModelNoCategories
+                    projectCode, softwareLanguage, strEmail, dataJsonByModelNoCategories, infoCad
                 );
                 // Exportamos
                 cls_00_SaveJson.TrySaveJson(
@@ -502,8 +503,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                     processStopwatch = Stopwatch.StartNew();
 
                     dictDataSetToJson = cls_00_GetFinalJsonDictCivilParamCheckCons.GetFinalJsonPsetSet(
-                        projectCode, softwareLanguage, dataJsonByModelFiltered, civilParamCheckFromSet,
-                        currentSetStatus, out updatedSetStatus
+                        infoCad, projectCode, softwareLanguage, strEmail, dataJsonByModelFiltered, 
+                        civilParamCheckFromSet, currentSetStatus, out updatedSetStatus
                     );
 
                     // Añadimos
@@ -571,6 +572,28 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 if (dictDataByFileToJsonToList == null || !dictDataByFileToJsonToList.Any()) return;
 
                 // -----------------------------
+                // Consultar datos existentes
+                // -----------------------------
+
+                ExistingDataResult existingData = await cls_00_GetExistingData.GetExistingDataByFileAsync(
+                    strAccessToken, isSpanish, dictDataByFileToJson, strEndpointDataByFileUrl
+                );
+                // Validamos consulta
+                if (!existingData.Success) return;
+
+                // -----------------------------
+                // Configuracion debug
+                // -----------------------------
+
+                bool existingDataShow = false;
+
+                // -----------------------------
+                // Mostrar datos existentes
+                // -----------------------------
+
+                cls_00_GetExistingData.ShowExistingData(existingData, existingDataShow);
+
+                // -----------------------------
                 // Enviar JSON Global
                 // -----------------------------
 
@@ -581,7 +604,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 );
 
                 bool uploaded = await cls_00_SendJsonByChunk.SendJsonByChunk(
-                    isSpanish, dictDataByFileToJsonToList, dictDataByFileToJson, keySoftwareVersion, keySoftwareLanguage,
+                    strAccessToken, isSpanish, dictDataByFileToJsonToList, dictDataByFileToJson, 
                     strEndpointDataByFileUrl, keyParamCheck
                 );
 
@@ -600,8 +623,8 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                     processStopwatch = Stopwatch.StartNew();
 
                     await cls_00_SendJsonByChunk.SendJsonByChunk_ParamCheckSet(
-                        isSpanish, dictDataSetToJson, currentSetStatus, strEndpointSetUrl,
-                        keySoftwareVersion, keySoftwareLanguage, keyParamCheck
+                       updatedSetStatus, strAccessToken, isSpanish, dictDataSetToJson, 
+                       currentSetStatus, strEndpointSetUrl, keyParamCheck
                     );
 
                     // Añadimos
@@ -622,7 +645,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 // -------------------------------
 
                 cls_00_ExportProcessTimesToHtml.ExportProcessTimesToHtml(
-                    processDurations, projectCode, strUserName, totalFiles, processedFiles, isSpanish,
+                    selectedFolderPath, processDurations, projectCode, preparedData.UserNameBySso, totalFiles, processedFiles, isSpanish,
                     processDurationsByModel, sendDurationsByModel, includeModelDetails: true
                 );
 

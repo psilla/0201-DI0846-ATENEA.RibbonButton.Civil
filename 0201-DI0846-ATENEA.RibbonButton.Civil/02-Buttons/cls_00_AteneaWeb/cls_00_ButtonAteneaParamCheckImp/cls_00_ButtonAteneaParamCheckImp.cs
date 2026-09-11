@@ -7,7 +7,7 @@ using TYPSA.PS.RibbonButton.Civil.Source.Class.Main;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Civil.Buttons;
 using TYPSA.SharedLib.EndPoints;
-using static TYPSA.PS.RibbonButton.Civil.cls_00_ParamImpMainWeb_Async;
+using static TYPSA.PS.RibbonButton.Civil.cls_00_PrepareParamWebDataAsync;
 using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
 
 namespace TYPSA.PS.RibbonButton.Civil
@@ -29,17 +29,14 @@ namespace TYPSA.PS.RibbonButton.Civil
         }
 
         [CommandMethod(RibbonCommands.ButtonAteneaParamCheckImp)]
-        public static void ButtonAteneaParamDataImp()
+        public static void ButtonAteneaParamCheckImp()
         {
             // ---------------------------------
             // Obtener datos de usuario
             // ---------------------------------
 
             bool userData = cls_00_GetUserData.GetUserData(
-                out string projectCode,
-                out List<string> selectedFiles,
-                out string selectedFolderPath,
-                out DateTime startTime,
+                out string projectCode, out List<string> selectedFiles, out string selectedFolderPath, out DateTime startTime,
                 customPathLabel: "Please, paste the folder containing the DWG files to analyze"
             );
             // Validamos
@@ -49,7 +46,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             // Obtener informacion
             // ---------------------------------
 
-            CadSessionInfo info = GetCivilSessionInfo();
+            CadSessionInfo infoCad = GetCivilSessionInfo();
             cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
 
             // ---------------------------------
@@ -57,8 +54,8 @@ namespace TYPSA.PS.RibbonButton.Civil
             // ---------------------------------
 
             bool isSpanish =
-                (info.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
-                (info.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
+                (infoCad.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
+                (infoCad.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
 
             // ---------------------------------
             // Texto UI segun idioma
@@ -71,23 +68,17 @@ namespace TYPSA.PS.RibbonButton.Civil
             // ---------------------------------
 
             ParamImpPreparedData dataFromAsyn = Task.Run(() => ParamImpMainWeb_Async(
-                projectCode, info, ateneaEndpoints, isSpanish)).GetAwaiter().GetResult();
+                projectCode, infoCad, ateneaEndpoints, isSpanish)).GetAwaiter().GetResult();
             // Validamos
             if (dataFromAsyn == null) return;
-
-            // -------------------------------
-            // Obtener informacion asyn
-            // -------------------------------
-
-            Dictionary<string, object> jsonSetDataFromWeb = dataFromAsyn.JsonData;
 
             // -------------------------------
             // Ejecutamos
             // -------------------------------
 
             cls_00_MainAteneaParamCheckImp.MainAteneaParamCheckImp(
-                selectedFiles.ToArray(), projectCode, startTime, info, ateneaEndpoints, 
-                uiTexts, jsonSetDataFromWeb, isSpanish
+                selectedFiles.ToArray(), selectedFolderPath, projectCode, startTime, infoCad, 
+                ateneaEndpoints, uiTexts, dataFromAsyn, isSpanish
             );
 
             // -------------------------------
@@ -105,7 +96,8 @@ namespace TYPSA.PS.RibbonButton.Civil
                 "\nEnded at: " + endTime.ToString("HH:mm:ss"),
                 uiTexts.Title, MessageBoxButtons.OK, MessageBoxIcon.Information
             );
-
         }
+
+
     }
 }

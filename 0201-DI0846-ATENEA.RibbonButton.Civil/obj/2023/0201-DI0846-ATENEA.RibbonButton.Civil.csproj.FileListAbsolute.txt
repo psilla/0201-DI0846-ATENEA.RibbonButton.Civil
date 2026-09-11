@@ -176,7 +176,6 @@ C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\Syste
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\System.Security.Cryptography.Pkcs.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\System.Text.Encoding.CodePages.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\System.Text.Encodings.Web.dll
-C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\System.Text.Json.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\System.Threading.Tasks.Extensions.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\System.ValueTuple.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\TYPSA.SharedLibAutocad.dll
@@ -204,7 +203,6 @@ C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\AcMr.
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\AdUIMgd.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\AcTcMgd.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\AeccHydroCalcsMgd.dll
-C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\System.IO.Pipelines.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\AcMNUParser.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\Autodesk.AutoCAD.Interop.dll
 C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil\bin\2023\Autodesk.DesktopConnector.API.dll

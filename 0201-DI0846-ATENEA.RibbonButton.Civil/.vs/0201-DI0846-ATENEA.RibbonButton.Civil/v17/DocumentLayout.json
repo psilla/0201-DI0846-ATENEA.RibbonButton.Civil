@@ -3,8 +3,14 @@
   "WorkspaceRootPath": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|c:\\0201-di0846-atenea.civil\\0201-di0846-atenea.ribbonbutton.civil\\02-buttons\\cls_00_ateneaweb\\cls_00_exportateneachecktohtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|solutionrelative:02-buttons\\cls_00_ateneaweb\\cls_00_exportateneachecktohtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DB670F85-371E-4BCE-9253-F2BDD6A66DEA}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibendpoints\\typsa.sharedlibendpoints\\cls_00_sendjsonbychunk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-main\\cls_00_ateneaweb\\cls_00_mainateneaparamcheckexp\\cls_00_mainateneaparamcheckexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C40E114-24C1-4F41-904E-9094E3D09A96}|0201-DI0846-ATENEA.RibbonButton.Civil.csproj|solutionrelative:03-main\\cls_00_ateneaweb\\cls_00_mainateneaparamcheckexp\\cls_00_mainateneaparamcheckexp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB670F85-371E-4BCE-9253-F2BDD6A66DEA}|..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints.csproj|c:\\0000-typsa.sharedlib\\0000-typsa.sharedlibendpoints\\typsa.sharedlibendpoints\\cls_00_getmodeldata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +20,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 133,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,15 +56,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "cls_00_ExportAteneaCheckToHtml.cs",
-              "DocumentMoniker": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\02-Buttons\\cls_00_AteneaWeb\\cls_00_ExportAteneaCheckToHtml.cs",
-              "RelativeDocumentMoniker": "02-Buttons\\cls_00_AteneaWeb\\cls_00_ExportAteneaCheckToHtml.cs",
-              "ToolTip": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\02-Buttons\\cls_00_AteneaWeb\\cls_00_ExportAteneaCheckToHtml.cs",
-              "RelativeToolTip": "02-Buttons\\cls_00_AteneaWeb\\cls_00_ExportAteneaCheckToHtml.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAWwN0AAAAiAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "cls_00_MainAteneaParamCheckExp.cs",
+              "DocumentMoniker": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
+              "RelativeDocumentMoniker": "03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
+              "ToolTip": "C:\\0201-DI0846-ATENEA.Civil\\0201-DI0846-ATENEA.RibbonButton.Civil\\03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
+              "RelativeToolTip": "03-Main\\cls_00_AteneaWeb\\cls_00_MainAteneaParamCheckExp\\cls_00_MainAteneaParamCheckExp.cs",
+              "ViewState": "AgIAAEcCAAAAAAAAAAAuwFgCAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-26T11:16:31.179Z",
+              "WhenOpened": "2026-08-30T08:11:34.954Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "cls_00_GetModelData.cs",
+              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_GetModelData.cs",
+              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_GetModelData.cs",
+              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_GetModelData.cs",
+              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_GetModelData.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAEwGYAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-30T07:42:49.312Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "cls_00_SendJsonByChunk.cs",
+              "DocumentMoniker": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_SendJsonByChunk.cs",
+              "RelativeDocumentMoniker": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_SendJsonByChunk.cs",
+              "ToolTip": "C:\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_SendJsonByChunk.cs",
+              "RelativeToolTip": "..\\..\\0000-TYPSA.SharedLib\\0000-TYPSA.SharedLibEndPoints\\TYPSA.SharedLibEndPoints\\cls_00_SendJsonByChunk.cs",
+              "ViewState": "AgIAAMACAAAAAAAAAAASwN0CAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-30T07:10:38.044Z",
               "EditorCaption": ""
             }
           ]

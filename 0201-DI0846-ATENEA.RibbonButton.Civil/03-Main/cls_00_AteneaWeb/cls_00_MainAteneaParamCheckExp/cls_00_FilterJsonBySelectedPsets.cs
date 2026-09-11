@@ -327,63 +327,66 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Resultado
             // -----------------------------
 
-            List<Dictionary<string, object>> result = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> result =
+                new List<Dictionary<string, object>>();
 
-            // -------------------------------
+            // -----------------------------
             // Obtener info
-            // -------------------------------
+            // -----------------------------
 
             string keyParamCheck = cls_00_AteneaJson.CivilParamCheck;
             string keyFileName = cls_00_AteneaJson.FileName;
+            string keyCategories = cls_00_AteneaJson.Categories;
 
-            // Iteramos archivos
+            // -----------------------------
+            // Iterar archivos
+            // -----------------------------
+
             foreach (Dictionary<string, object> fileData in dataJsonByModel)
             {
                 Dictionary<string, object> newFileData =
                     new Dictionary<string, object>();
 
-                // Copiamos nombre
-                if (fileData.ContainsKey(keyFileName))
+                // -----------------------------
+                // Copiar nombre
+                // -----------------------------
+
+                if (fileData.TryGetValue(keyFileName, out object fileName))
                 {
-                    newFileData.Add(
-                        keyFileName,
-                        fileData[keyFileName]
-                    );
+                    newFileData.Add(keyFileName, fileName);
                 }
 
-                // Validamos
-                if (!fileData.ContainsKey(keyParamCheck))
+                // -----------------------------
+                // Obtener Property Sets
+                // -----------------------------
+
+                if (!fileData.TryGetValue(keyParamCheck, out object paramCheckObj))
                 {
                     result.Add(newFileData);
                     continue;
                 }
 
-                // -----------------------------
-                // Copiar Property Sets
-                // -----------------------------
-
                 List<Dictionary<string, object>> psets =
-                    fileData[keyParamCheck] as List<Dictionary<string, object>>;
+                    paramCheckObj as List<Dictionary<string, object>>;
 
                 List<Dictionary<string, object>> newPsets =
                     new List<Dictionary<string, object>>();
+
+                // -----------------------------
+                // Copiar Property Sets
+                // -----------------------------
 
                 if (psets != null)
                 {
                     foreach (Dictionary<string, object> pset in psets)
                     {
-                        Dictionary<string, object> newPset =
-                            new Dictionary<string, object>();
+                        Dictionary<string, object> newPset = new Dictionary<string, object>();
 
                         foreach (KeyValuePair<string, object> kv in pset)
                         {
-                            if (kv.Key.Equals(
-                                cls_00_AteneaJson.Categories,
-                                StringComparison.OrdinalIgnoreCase))
-                            {
-                                continue;
-                            }
-
+                            // Excluir Categories
+                            if (kv.Key.Equals(keyCategories, StringComparison.OrdinalIgnoreCase)) continue;
+                            
                             newPset.Add(kv.Key, kv.Value);
                         }
 
@@ -391,10 +394,15 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                     }
                 }
 
-                newFileData.Add(
-                    keyParamCheck,
-                    newPsets
-                );
+                // -----------------------------
+                // Añadir Property Sets
+                // -----------------------------
+
+                newFileData.Add(keyParamCheck, newPsets);
+
+                // -----------------------------
+                // Almacenar
+                // -----------------------------
 
                 result.Add(newFileData);
             }
@@ -458,7 +466,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 // Obtener Psets del Set Web
                 // -------------------------------
 
-                List<string> existingPsetNamesInSet = cls_00_ParamImpMainWeb_Async.GetPsetNames(
+                List<string> existingPsetNamesInSet = cls_00_ParamImpMainWeb.GetPsetNames(
                     civilParamCheckFromSet, keyPsetName)?.OrderBy(x => x).ToList()?? new List<string>();
 
                 // -------------------------------

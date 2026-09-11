@@ -8,8 +8,7 @@ using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Civil.Buttons;
 using TYPSA.SharedLib.Civil.JsonTools;
 using TYPSA.SharedLib.EndPoints;
-using TYPSA.SharedLib.UserForms;
-using static TYPSA.PS.RibbonButton.Civil.cls_00_ParamImpMainWeb_Async;
+using static TYPSA.PS.RibbonButton.Civil.cls_00_PrepareParamWebDataAsync;
 using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
 
 namespace TYPSA.PS.RibbonButton.Civil
@@ -75,17 +74,14 @@ namespace TYPSA.PS.RibbonButton.Civil
         }
 
         [CommandMethod(RibbonCommands.ButtonAteneaParamDataImp)]
-        public static void PropImportBackFromJSON()
+        public static void ButtonAteneaParamDataImp()
         {
             // ---------------------------------
             // Obtener datos de usuario
             // ---------------------------------
 
             bool userData = cls_00_GetUserData.GetUserData(
-                out string projectCode,
-                out List<string> selectedFiles,
-                out string selectedFolderPath,
-                out DateTime startTime,
+                out string projectCode, out List<string> selectedFiles, out string selectedFolderPath, out DateTime startTime,
                 customPathLabel: "Please, paste the folder containing the DWG files to analyze"
             );
             // Validamos
@@ -95,7 +91,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             // Obtener informacion
             // ---------------------------------
 
-            CadSessionInfo info = GetCivilSessionInfo();
+            CadSessionInfo infoCad = GetCivilSessionInfo();
             cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
 
             // ---------------------------------
@@ -103,8 +99,8 @@ namespace TYPSA.PS.RibbonButton.Civil
             // ---------------------------------
 
             bool isSpanish =
-                (info.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
-                (info.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
+                (infoCad.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
+                (infoCad.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
 
             // ---------------------------------
             // Texto UI según idioma
@@ -117,17 +113,9 @@ namespace TYPSA.PS.RibbonButton.Civil
             // ---------------------------------
 
             ParamImpPreparedData dataFromAsyn = Task.Run(() => ParamImpMainWeb_Async(
-                projectCode, info, ateneaEndpoints, isSpanish)).GetAwaiter().GetResult();
+                projectCode, infoCad, ateneaEndpoints, isSpanish)).GetAwaiter().GetResult();
             // Validamos
             if (dataFromAsyn == null) return;
-
-            // -------------------------------
-            // Obtener informacion asyn
-            // -------------------------------
-
-            string strUserName = dataFromAsyn.UserName;
-            string strAteneaVersion = dataFromAsyn.AteneaVersion;
-            Dictionary<string, object> jsonSetDataFromWeb = dataFromAsyn.JsonData;
 
             // -------------------------------
             // Cargar JSON Global desde API
@@ -138,8 +126,9 @@ namespace TYPSA.PS.RibbonButton.Civil
             try
             {
                 // Obtenemos el objeto
-                dataByModelFromJson = Task.Run(() => cls_00_LoadJsonFromApiPostAsync.LoadJsonFromApiPostAsync<Root>(
-                    ateneaEndpoints.EndpointGetDataByModelUrl, projectCode, strUserName, strAteneaVersion, isSpanish
+                dataByModelFromJson = Task.Run(() => cls_00_PostParamSet.PostSetAsync<Root>(
+                    ateneaEndpoints.EndpointGetDataByModelUrl, projectCode, dataFromAsyn.AteneaVersion, 
+                    isSpanish, dataFromAsyn.UserNameBySso
                 )).GetAwaiter().GetResult();
 
                 // -------------------------------
@@ -171,8 +160,8 @@ namespace TYPSA.PS.RibbonButton.Civil
             // -------------------------------
 
             cls_00_MainAteneaParamDataImp.MainAteneaParamDataImp(
-                selectedFiles.ToArray(), projectCode, startTime, info, ateneaEndpoints,
-                uiTexts, dataByModelFromJson, jsonSetDataFromWeb, isSpanish
+                selectedFiles.ToArray(), selectedFolderPath, projectCode,
+                dataByModelFromJson, dataFromAsyn, isSpanish
             );
 
             // -------------------------------

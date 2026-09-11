@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.ApplicationServices;
@@ -76,8 +75,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             string projectCode,
             List<string> selectedOptions,
             DateTime startTime,
-            CadSessionInfo info,
-            cls_00_AteneaEndPointsCivil ateneaEndpoints,
+            CadSessionInfo infoCad,
             UiTexts uiTexts,
             bool isSpanish
         )
@@ -116,14 +114,16 @@ namespace TYPSA.PS.RibbonButton.Civil
             // Obtener informacion
             // -------------------------------
 
-            string keySoftwareVersion = cls_00_AteneaJson.CivilVersion;
-            string keySoftwareLanguage = cls_00_AteneaJson.CivilLanguage;
             string keyDataByFileName = cls_00_AteneaJson.DataByFileName;
             string keyElementData = cls_00_AteneaJson.CivilElementData;
             string keyFileName = cls_00_AteneaJson.FileName;
+
+            cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
             string strEndpointProjectDataUrl = ateneaEndpoints.EndpointProjectDataUrl;
-            string strEndpointDeleteUrl = ateneaEndpoints.EndpointDeleteUrl;
-            string strEndpointPostUrl = ateneaEndpoints.EndpointPostUrl;
+            string strEndpointElementDataUrl = ateneaEndpoints.EndpointElementDataUrl;
+
+            string strAccessToken = cls_00_AteneaSession.AccessToken;
+            string strEmail = cls_00_AteneaSession.Email;
 
             // -------------------------------
             // Reiniciamos cronometro global
@@ -136,12 +136,12 @@ namespace TYPSA.PS.RibbonButton.Civil
             // -------------------------------
 
             Dictionary<string, object> dictProjectDataToVal = GetProjectDataDictionarySSO(
-                projectCode
+                projectCode, softwareLanguage, infoCad
             );
 #if CIVIL2020 || CIVIL2021 || CIVIL2022 || CIVIL2023 || CIVIL2024 || CIVIL2025 || CIVIL2026
             // Validamos Datos de Proyecto
-            if (!await cls_00_ValidateProjectInfo.ValidateProjectDataAsyncSSO(
-                ateneaEndpoints.EndpointProjectDataUrlSso, dictProjectDataToVal, isSpanish, cls_00_AteneaSession.AccessToken
+            if (!await cls_00_PostProjectInfo.ValidateProjectDataAsyncSSO(
+                strEndpointProjectDataUrl, dictProjectDataToVal, isSpanish, strAccessToken
             )) return;
 #endif
 
@@ -229,7 +229,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                             );
 
                             // -------------------------------
-                            // Obtener info
+                            // Obtener informacion
                             // -------------------------------
 
                             Database db = openedDoc.Database;
@@ -249,7 +249,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                                     BlockTable bt = cls_00_DocumentInfo.GetBlockTableForRead(tr, db);
 
                                     // -------------------------------
-                                    // Procesar info
+                                    // Procesar informacion
                                     // -------------------------------
 
                                     msg = cls_00_ProcessMessages.ShowProcessMessage(
@@ -258,54 +258,9 @@ namespace TYPSA.PS.RibbonButton.Civil
 
                                     modelProcessStopwatch = Stopwatch.StartNew();
 
-                                    cls_00_GetDataCadModelChecker.ProcessProjectUnits(
-                                        selectedOptions, keys, db, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataCadModelChecker.ProcessLayersInUse(
-                                        selectedOptions, keys, tr, db, bt, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataCadModelChecker.ProcessLayerZero(
-                                        selectedOptions, keys, tr, db, bt, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataCadModelChecker.ProcessVersion(
-                                        selectedOptions, keys, db, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataCadModelChecker.ProcessXrefs(
-                                        selectedOptions, keys, tr, db, bt, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataModelChecker.ProcessCoordinateSystem(
-                                        selectedOptions, keys, fileName, warningChecksLog, resultsFromCivil, extractedData
-                                    );
-                                    cls_00_GetDataCadModelChecker.ProcessPaperTextFont(
-                                        selectedOptions, keys, tr, db, fileName, warningChecksLog, resultsfromcad, extractedData,
-                                        AteneaModelCheckerDefaults.ExpectedPaperTextFont
-                                    );
-                                    cls_00_GetDataCadModelChecker.ProcessFileSize(
-                                        selectedOptions, keys, file, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataCadModelChecker.ProcessBlocksInUse(
-                                        selectedOptions, keys, tr, db, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    //cls_00_GetDataModelChecker.ProcessEntityTypes(
-                                    //    selectedOptions, keys, tr, db, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    //);
-                                    cls_00_GetDataCadModelChecker.ProcessEntityTypesCount(
-                                        selectedOptions, keys, tr, db, bt, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataModelChecker.ProcessPurgeableStyles(
-                                        selectedOptions, keys, tr, db, fileName, warningChecksLog, resultsFromCivil, extractedData
-                                    );
-                                    //cls_00_GetDataModelChecker.ProcessBlockRefsInLayouts(
-                                    //    selectedOptions, keys, tr, db, bt, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    //);
-                                    cls_00_GetDataCadModelChecker.ProcessBlockRefsInLayoutsCount(
-                                        selectedOptions, keys, tr, db, bt, fileName, warningChecksLog, resultsfromcad, extractedData
-                                    );
-                                    cls_00_GetDataModelChecker.ProcessCivilStyles(
-                                        selectedOptions, keys, tr, db, fileName, warningChecksLog, resultsFromCivil, extractedData
-                                    );
-                                    cls_00_GetDataModelChecker.ProcessCivilObjects(
-                                        selectedOptions, keys, tr, db, fileName, warningChecksLog, resultsFromCivil, extractedData
+                                    cls_00_ProcessModelChecks.ProcessModelChecks(
+                                        selectedOptions, keys, tr, db, bt, file, fileName, warningChecksLog,
+                                        resultsfromcad, resultsFromCivil, extractedData, isSpanish
                                     );
 
                                     cls_00_ProcessMessages.AddProcessDuration(modelDurations, msg, modelProcessStopwatch);
@@ -420,7 +375,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                 progressBarForm.Close();
 
                 // -----------------------------
-                // Validar info Global
+                // Validar informacion Global
                 // -----------------------------
 
                 Stopwatch processStopwatch = Stopwatch.StartNew();
@@ -442,11 +397,11 @@ namespace TYPSA.PS.RibbonButton.Civil
                 msg = cls_00_ProcessMessages.ShowProcessMessage(isSpanish, cls_00_ProcessMessages.GenerateJson);
 
                 Dictionary<string, object> dictDataByFileToJson = GetFinalJsonDictionary(
-                    projectCode, softwareLanguage, dataJsonByModel
+                    projectCode, softwareLanguage, strEmail, dataJsonByModel, infoCad
                 );
                 // Exportamos
                 cls_00_SaveJson.TrySaveJson(
-                    isSpanish, dictDataByFileToJson, projectCode, info.RootFolderName, info.JsonFileNameDataExtraction,
+                    isSpanish, dictDataByFileToJson, projectCode, infoCad.RootFolderName, infoCad.JsonFileNameDataExtraction,
                     selectedFolderPath
                 );
 
@@ -473,20 +428,69 @@ namespace TYPSA.PS.RibbonButton.Civil
                 cls_00_ProcessMessages.AddProcessDuration(processDurations, msg, processStopwatch);
 
                 // -----------------------------
-                // Borrar datos previos
+                // Consultar datos existentes
                 // -----------------------------
 
-                processStopwatch = Stopwatch.StartNew();
-
-                msg = cls_00_ProcessMessages.ShowProcessMessage(isSpanish, cls_00_ProcessMessages.SendGlobalJsonByModelToServer);
-
-                bool deleted = await cls_00_DeleteData.DeleteByModelElementData(
-                    isSpanish, dictDataByFileToJsonToList, dictDataByFileToJson, strEndpointDeleteUrl, keyElementData
+                ExistingDataResult existingData = await cls_00_GetExistingData.GetExistingDataByFileAsync(
+                    strAccessToken, isSpanish, dictDataByFileToJson, strEndpointElementDataUrl
                 );
+                // Validamos consulta
+                if (!existingData.Success) return;
 
-                cls_00_ProcessMessages.AddProcessDuration(processDurations, msg, processStopwatch);
-                // Validamos
-                if (!deleted) return;
+                // -----------------------------
+                // Configuracion debug
+                // -----------------------------
+
+                bool existingDataShow = false;
+
+                // -----------------------------
+                // Mostrar datos existentes
+                // -----------------------------
+
+                cls_00_GetExistingData.ShowExistingData(existingData, existingDataShow);
+
+                // -----------------------------
+                // Validar si existen datos
+                // -----------------------------
+
+                if (existingData.HasData)
+                {
+                    // -----------------------------
+                    // Obtener informacion a borrar
+                    // -----------------------------
+
+                    List<Dictionary<string, object>> dataByFileName = cls_00_GetModelData.GetDeleteExistingElementData(
+                        dictDataByFileToJsonToList, existingData.Json, keyElementData
+                    );
+                    // Validamos
+                    if (dataByFileName != null && dataByFileName.Count > 0)
+                    {
+                        // -----------------------------
+                        // Borrar datos previos
+                        // -----------------------------
+
+                        string msgDeletePreviousData = cls_00_ProcessMessages.ShowProcessMessage(
+                            isSpanish, cls_00_ProcessMessages.DeletePreviousModelData
+                        );
+
+                        Stopwatch deletePreviousDataStopwatch = Stopwatch.StartNew();
+
+                        try
+                        {
+                            bool deleted = await cls_00_DeleteData.DeleteDataByEndpoint(
+                                strAccessToken, isSpanish, dictDataByFileToJson, dataByFileName, strEndpointElementDataUrl
+                            );
+                            // Validamos
+                            if (!deleted) return;
+                        }
+                        finally
+                        {
+                            cls_00_ProcessMessages.AddProcessDuration(
+                                processDurations, msgDeletePreviousData, deletePreviousDataStopwatch
+                            );
+                        }
+                    }
+                }
 
                 // -----------------------------
                 // Enviar JSON global
@@ -499,8 +503,8 @@ namespace TYPSA.PS.RibbonButton.Civil
                 );
 
                 bool uploaded = await cls_00_SendJsonByChunk.SendJsonByChunk(
-                    isSpanish, dictDataByFileToJsonToList, dictDataByFileToJson, keySoftwareVersion,
-                    keySoftwareLanguage, strEndpointPostUrl, keyElementData
+                    strAccessToken, isSpanish, dictDataByFileToJsonToList, dictDataByFileToJson,
+                    strEndpointElementDataUrl, keyElementData
                 );
 
                 cls_00_ProcessMessages.AddProcessDuration(processDurations, msg, processStopwatch);
@@ -509,21 +513,39 @@ namespace TYPSA.PS.RibbonButton.Civil
 #endif
 
                 // -----------------------------
-                // Validar info
+                // Validar informacion
                 // -----------------------------
 
-                msg = isSpanish
-                    ? "Validando la información recopilada de todos los documentos"
-                    : "Validating the information collected from all documents";
-                // Mensaje
-                new AutoCloseMessageForm(msg, 1000).ShowDialog();
+                processStopwatch = Stopwatch.StartNew();
+
+                msg = cls_00_ProcessMessages.ShowProcessMessage(
+                    isSpanish, cls_00_ProcessMessages.ValidateCollectedData
+                );
 
                 bool hasData =
-                    resultsfromcad.ProjectUnits.Any() || resultsfromcad.LayersInUse.Any() || resultsfromcad.LayerZero.Any() ||
-                    resultsfromcad.Version.Any() || resultsfromcad.Xrefs.Any() || resultsfromcad.PaperTextFont.Any() ||
-                    resultsfromcad.FileSize.Any() || resultsfromcad.BlockRefsInLayoutsCount.Any() || resultsfromcad.BlocksInUse.Any() ||
-                    resultsfromcad.EntityTypesCount.Any() || resultsFromCivil.CoordSystem.Any() || resultsFromCivil.PurgeableStyles.Any() ||
-                    resultsFromCivil.HasCivilStyles || resultsFromCivil.HasCivilObjects;
+                    resultsfromcad.ByLayer.Any() ||
+                    resultsfromcad.Audit.Any() ||
+                    resultsfromcad.PurgeableItemsCount.Any() ||
+                    resultsfromcad.ProjectUnits.Any() ||
+                    resultsfromcad.LayersInUse.Any() ||
+                    resultsfromcad.LayerZero.Any() ||
+                    resultsfromcad.Version.Any() ||
+                    resultsfromcad.Xrefs.Any() ||
+                    resultsfromcad.PaperTextFont.Any() ||
+                    resultsfromcad.FileSize.Any() ||
+                    resultsfromcad.BlockRefsInLayoutsCount.Any() ||
+                    resultsfromcad.BlocksInUse.Any() ||
+                    resultsfromcad.EntityTypesCount.Any() ||
+                    resultsFromCivil.CoordSystem.Any() ||
+                    resultsFromCivil.PurgeableStyles.Any() ||
+                    resultsFromCivil.HasCivilStyles ||
+                    resultsFromCivil.HasCivilObjects ||
+                    resultsFromCivil.PropertySetsCount.Any();
+
+                cls_00_ProcessMessages.AddProcessDuration(
+                    processDurations, msg, processStopwatch
+                );
+
                 // Validamos
                 if (hasData || warningChecksLog.Any())
                 {
@@ -531,7 +553,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                     // Preparar datos exportacion
                     // ---------------------------------
 
-                    Dictionary<string, object> exportData = cls_00_GetExportDataModelChecker.GetExportData(
+                    Dictionary<string, object> exportData = cls_00_GetExportData.GetExportData(
                         keys, selectedOptions, resultsfromcad, resultsFromCivil
                     );
 
@@ -544,15 +566,15 @@ namespace TYPSA.PS.RibbonButton.Civil
                         exportData.Add("Warning Selected Checks Log", warningChecksLog);
                     }
 
-                    // ---------------------------------
-                    // Exportar report
-                    // ---------------------------------
+                    // -----------------------------
+                    // Generar informes finales
+                    // -----------------------------
 
-                    msg = isSpanish
-                        ? "Generando los informes finales en Excel y HTML..."
-                        : "Generating the final Excel and HTML reports...";
-                    // Mensaje
-                    new AutoCloseMessageForm(msg, 1000).ShowDialog();
+                    processStopwatch = Stopwatch.StartNew();
+
+                    msg = cls_00_ProcessMessages.ShowProcessMessage(
+                        isSpanish, cls_00_ProcessMessages.GenerateFinalReports
+                    );
 
                     // Excel
                     ExportDataToExcel(exportData);
@@ -560,6 +582,10 @@ namespace TYPSA.PS.RibbonButton.Civil
                     // Html
                     cls_00_ExportAteneaCheckToHtml.ExportToHtml(
                         selectedFolderPath, exportData, warningChecksLog, projectCode, totalFiles, processedFiles
+                    );
+
+                    cls_00_ProcessMessages.AddProcessDuration(
+                        processDurations, msg, processStopwatch
                     );
                 }
                 else

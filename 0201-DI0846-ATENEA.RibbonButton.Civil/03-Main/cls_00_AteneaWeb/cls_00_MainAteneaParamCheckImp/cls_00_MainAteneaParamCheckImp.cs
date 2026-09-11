@@ -17,12 +17,13 @@ using TYPSA.SharedLib.Autocad.GetDocument;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Civil.GetPropertyData;
 using TYPSA.SharedLib.Civil.GetPsetData;
+using TYPSA.SharedLib.Civil.SetDataFromJson;
 using TYPSA.SharedLib.EndPoints;
 using TYPSA.SharedLib.UserForms;
+using static TYPSA.PS.RibbonButton.Civil.cls_00_ParamImpMainWeb;
+using static TYPSA.PS.RibbonButton.Civil.cls_00_PrepareParamWebDataAsync;
 using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
-using static TYPSA.PS.RibbonButton.Civil.cls_00_ParamImpMainWeb_Async;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
-using TYPSA.SharedLib.Civil.SetDataFromJson;
 
 namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
 {
@@ -70,12 +71,13 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
         
         public static async Task MainAteneaParamCheckImp(
             string[] selectedFiles,
+            string selectedFolderPath,
             string projectCode,
             DateTime startTime,
-            CadSessionInfo info,
+            CadSessionInfo infoCad,
             cls_00_AteneaEndPointsCivil ateneaEndpoints,
             UiTexts uiTexts,
-            Dictionary<string, object> jsonSetDataFromWeb,
+            ParamImpPreparedData dataFromAsyn,
             bool isSpanish
         )
         {
@@ -118,17 +120,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             // Obtener informacion
             // -------------------------------
 
-            string keyParamCheck = cls_00_AteneaJson.CivilParamCheck;
             string keyPsetName = cls_00_AteneaJson.PsetName;
-            string strUserName = info.UserName;
-
-            // -------------------------------
-            // Obtener data
-            // -------------------------------
-
-            List<Dictionary<string, object>> civilParamCheckFromSet = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(
-                jsonSetDataFromWeb[keyParamCheck].ToString()
-            ) ?? new List<Dictionary<string, object>>();
 
             // -------------------------------
             // Obtener Opciones importacion
@@ -139,11 +131,11 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
             Stopwatch processStopwatch = Stopwatch.StartNew();
 
             // -------------------------------
-            // Property Sets
+            // Seleccionar Property Sets
             // -------------------------------
 
             if (!TryGetFiltPsetsDataFromUserSelection(
-                civilParamCheckFromSet, keyPsetName, dataTypeDictFiltered, isSpanish,
+                dataFromAsyn.CivilParamCheckFromSet, keyPsetName, dataTypeDictFiltered, isSpanish,
                 out Dictionary<string, SelectedPsetData> selectedPsetData
             )) return;
 
@@ -421,7 +413,7 @@ namespace TYPSA.PS.RibbonButton.Civil.Source.Class.Main
                 // -------------------------------
 
                 cls_00_ExportProcessTimesToHtml.ExportProcessTimesToHtml(
-                    processDurations, projectCode, strUserName, totalFiles, processedFiles, isSpanish,
+                    selectedFolderPath, processDurations, projectCode, dataFromAsyn.UserNameBySso, totalFiles, processedFiles, isSpanish,
                     processDurationsByModel, sendDurationsByModel, includeModelDetails: true
                 );
             }

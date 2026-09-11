@@ -355,22 +355,22 @@ namespace TYPSA.PS.RibbonButton.Civil
 
                         case RibbonCommands.ButtonAteneaParamCheckExp:
                             // Instanciamos la clase
-                            cls_00_ButtonAteneaParamCheckExp.ButtonAteneaParamDataExp();
+                            cls_00_ButtonAteneaParamCheckExp.ButtonAteneaParamCheckExp();
                             break;
 
                         case RibbonCommands.ButtonAteneaParamCheckImp:
                             // Instanciamos la clase
-                            cls_00_ButtonAteneaParamCheckImp.ButtonAteneaParamDataImp();
+                            cls_00_ButtonAteneaParamCheckImp.ButtonAteneaParamCheckImp();
                             break;
 
                         case RibbonCommands.ButtonAteneaParamDataExp:
                             // Instanciamos la clase
-                            cls_00_ButtonAteneaParamDataExp.PropExportBackToJSON();
+                            cls_00_ButtonAteneaParamDataExp.ButtonAteneaParamDataExp();
                             break;
 
                         case RibbonCommands.ButtonAteneaParamDataImp:
                             // Instanciamos la clase
-                            cls_00_ButtonAteneaParamDataImp.PropImportBackFromJSON();
+                            cls_00_ButtonAteneaParamDataImp.ButtonAteneaParamDataImp();
                             break;
 
                         // Default case for unhandled commands. No action is taken.

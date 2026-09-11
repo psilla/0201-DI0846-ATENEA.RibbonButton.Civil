@@ -5,7 +5,7 @@ using TYPSA.SharedLib.Civil.Main;
 
 namespace TYPSA.PS.RibbonButton.Civil
 {
-    internal class cls_00_GetExportDataModelChecker
+    internal class cls_00_GetExportData
     {
         public static Dictionary<string, object> GetExportData(
             ModelCheckerKeys keys,
@@ -15,6 +15,51 @@ namespace TYPSA.PS.RibbonButton.Civil
         )
         {
             Dictionary<string, object> exportData = new Dictionary<string, object>();
+
+            // -----------------------------
+            // Revision Clouds
+            // -----------------------------
+
+            if (selectedOptions.Contains(keys.RevCloud) && resultsfromcad.RevisionClouds.Any())
+            {
+                exportData.Add(keys.RevCloud, resultsfromcad.RevisionClouds);
+            }
+
+            // -----------------------------
+            // ByLayer
+            // -----------------------------
+
+            if (selectedOptions.Contains(keys.EntByLayer) && resultsfromcad.ByLayer.Any())
+            {
+                exportData.Add(keys.EntByLayer, resultsfromcad.ByLayer);
+            }
+
+            // -----------------------------
+            // Property Sets
+            // -----------------------------
+
+            if (selectedOptions.Contains(keys.PropertySets) && resultsFromCivil.PropertySetsCount.Any())
+            {
+                exportData.Add(keys.PropertySets, resultsFromCivil.PropertySetsCount);
+            }
+
+            // -----------------------------
+            // Drawing Audit
+            // -----------------------------
+
+            if (selectedOptions.Contains(keys.Audit) && resultsfromcad.Audit.Any())
+            {
+                exportData.Add(keys.Audit, resultsfromcad.Audit);
+            }
+
+            // -----------------------------
+            // Purgeable Items
+            // -----------------------------
+
+            if (selectedOptions.Contains(keys.PurgeableItems) && resultsfromcad.PurgeableItemsCount.Any())
+            {
+                exportData.Add(keys.PurgeableItems, resultsfromcad.PurgeableItemsCount);
+            }
 
             // -----------------------------
             // Project Units
@@ -97,15 +142,6 @@ namespace TYPSA.PS.RibbonButton.Civil
                 exportData.Add(keys.BlocksInUse, resultsfromcad.BlocksInUse);
             }
 
-            //// -----------------------------
-            //// Entity Types
-            //// -----------------------------
-
-            //if (selectedOptions.Contains(keys.EntityTypes) && resultsfromcad.EntityTypes.Any())
-            //{
-            //    exportData.Add(keys.EntityTypes, resultsfromcad.EntityTypes);
-            //}
-
             // -----------------------------
             // Entity Types
             // -----------------------------
@@ -123,15 +159,6 @@ namespace TYPSA.PS.RibbonButton.Civil
             {
                 exportData.Add(keys.PurgeableStyles, resultsFromCivil.PurgeableStyles);
             }
-
-            //// -----------------------------
-            //// Block References in Layout
-            //// -----------------------------
-
-            //if (selectedOptions.Contains(keys.BlockRefsInLayouts) && resultsfromcad.BlockRefsInLayouts.Any())
-            //{
-            //    exportData.Add(keys.BlockRefsInLayouts, resultsfromcad.BlockRefsInLayouts);
-            //}
 
             // -----------------------------
             // Block References in Layout
@@ -186,5 +213,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             // return
             return exportData;
         }
+
+
     }
 }

@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using Autodesk.AutoCAD.Runtime;
 using TYPSA.SharedLib.Autocad.Main;
 using TYPSA.SharedLib.Civil.Buttons;
-using TYPSA.SharedLib.EndPoints;
 using TYPSA.SharedLib.UserForms;
 using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
 using Exception = System.Exception;
@@ -66,16 +65,15 @@ namespace TYPSA.PS.RibbonButton.Civil
                 // Obtener informacion
                 // ---------------------------------
 
-                CadSessionInfo info = GetCivilSessionInfo();
-                cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
+                CadSessionInfo infoCad = GetCivilSessionInfo();
 
                 // ---------------------------------
                 // Detectar idioma 
                 // ---------------------------------
              
                 bool isSpanish =
-                    (info.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (info.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
+                    (infoCad.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (infoCad.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
 
                 // ---------------------------------
                 // Texto UI segun idioma
@@ -88,8 +86,8 @@ namespace TYPSA.PS.RibbonButton.Civil
                 // ---------------------------------
 
                 List<string> selectedOptions = cls_00_InstaForm_CheckedListBox.CheckListBoxFormSearchOut(
-                    uiTexts.Title, ModelCheckerKeys.GetAllOptionsAteneaCivilCustom(isSpanish).OrderBy(x => x).ToList(),
-                    ModelCheckerKeys.GetDefaultSelectedOptionsAteneaCivilCustom(isSpanish)
+                    uiTexts.Title, ModelCheckerKeys.GetAllOptionsAtenea(isSpanish).OrderBy(x => x).ToList(),
+                    ModelCheckerKeys.GetDefaultSelectedOptionsAtenea(isSpanish)
                 );
                 // Validamos
                 if (selectedOptions == null || selectedOptions.Count == 0)
@@ -109,7 +107,7 @@ namespace TYPSA.PS.RibbonButton.Civil
 
                 cls_00_MainAteneaModelChecker.MainAteneaModelChecker(
                     selectedFiles.ToArray(), selectedFolderPath, projectCode, selectedOptions, 
-                    startTime, info, ateneaEndpoints, uiTexts, isSpanish
+                    startTime, infoCad, uiTexts, isSpanish
                 );
             }
             // catch

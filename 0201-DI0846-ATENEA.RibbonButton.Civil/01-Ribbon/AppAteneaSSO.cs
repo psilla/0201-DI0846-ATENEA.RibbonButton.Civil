@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Autodesk.AutoCAD.Runtime;
-using _0201_DI0846_ATENEA.RibbonButton.Civil.Properties;
+using System.Reflection;
+using static TYPSA.SharedLib.Autocad.cls_00_Ribbon;
 
 namespace TYPSA.PS.RibbonButton.Civil
 {
@@ -26,6 +22,44 @@ namespace TYPSA.PS.RibbonButton.Civil
 
         public void Initialize()
         {
+            // -----------------------------
+            // Validar Ribbon
+            // -----------------------------
+
+            if (Autodesk.Windows.ComponentManager.Ribbon == null)
+            {
+                Autodesk.Windows.ComponentManager.ItemInitialized +=
+                    ComponentManager_ItemInitialized;
+            }
+            else
+            {
+                LoadRibbon();
+            }
+        }
+
+        // -----------------------------
+        // Ribbon Initialized
+        // -----------------------------
+
+        private void ComponentManager_ItemInitialized(
+            object sender,
+            Autodesk.Windows.RibbonItemEventArgs e
+        )
+        {
+            // Validamos
+            if (Autodesk.Windows.ComponentManager.Ribbon == null) return;
+
+            // -----------------------------
+            // Desuscribir evento
+            // -----------------------------
+
+            Autodesk.Windows.ComponentManager.ItemInitialized -=
+                ComponentManager_ItemInitialized;
+
+            // -----------------------------
+            // Cargar Ribbon
+            // -----------------------------
+
             LoadRibbon();
         }
 
@@ -35,6 +69,8 @@ namespace TYPSA.PS.RibbonButton.Civil
 
         public void Terminate()
         {
+            Autodesk.Windows.ComponentManager.ItemInitialized -=
+                ComponentManager_ItemInitialized;
         }
 
         // -----------------------------
@@ -43,173 +79,224 @@ namespace TYPSA.PS.RibbonButton.Civil
 
         private void LoadRibbon()
         {
-            Autodesk.Windows.RibbonControl ribbonControl =
-                Autodesk.Windows.ComponentManager.Ribbon;
+            // try
+            try
+            {
+                // -----------------------------
+                // Debug
+                // -----------------------------
 
-            // Validamos
-            if (ribbonControl == null) return;
+                bool showDebug = false;
+                if (showDebug)
+                {
+                    string[] resources = typeof(AppAteneaSSO).Assembly.GetManifestResourceNames();
 
-            // -----------------------------
-            // Crear Ribbon
-            // -----------------------------
+                    System.Windows.Forms.MessageBox.Show(
+                        string.Join(Environment.NewLine, resources),
+                        "Embedded Resources"
+                    );
+                }
 
-            Autodesk.Windows.RibbonTab rtab =
-                new Autodesk.Windows.RibbonTab
+                // -----------------------------
+                // Crear Ribbon Control
+                // -----------------------------
+
+                Autodesk.Windows.RibbonControl ribbonControl = Autodesk.Windows.ComponentManager.Ribbon;
+                // Validamos
+                if (ribbonControl == null) return;
+
+                // -----------------------------
+                // Crear Command Handler
+                // -----------------------------
+
+                MyRibbonCommandHandler commandHandler = new MyRibbonCommandHandler();
+
+                // -----------------------------
+                // Obtener Assembly de recursos
+                // -----------------------------
+
+                Assembly resourceAssembly = typeof(AppAteneaSSO).Assembly;
+
+                // -----------------------------
+                // Evitar duplicados
+                // -----------------------------
+
+                foreach (Autodesk.Windows.RibbonTab tab in ribbonControl.Tabs)
+                {
+                    if (tab.Id == "TESTRIBBON_TAB_ID")
+                    {
+                        return;
+                    }
+                }
+
+                // -----------------------------
+                // Crear Ribbon
+                // -----------------------------
+
+                Autodesk.Windows.RibbonTab rtab = new Autodesk.Windows.RibbonTab
                 {
                     Title = "TYPSA-PS",
                     Id = "TESTRIBBON_TAB_ID"
                 };
 
-            ribbonControl.Tabs.Add(rtab);
+                ribbonControl.Tabs.Add(rtab);
 
-            // -----------------------------
-            // Crear Panel ATENEA Web
-            // -----------------------------
+                // -----------------------------
+                // Crear Panel ATENEA Web
+                // -----------------------------
 
-            Autodesk.Windows.RibbonPanelSource rps4 =
-                new Autodesk.Windows.RibbonPanelSource
+                Autodesk.Windows.RibbonPanelSource rps1 = new Autodesk.Windows.RibbonPanelSource
                 {
                     Title = "ATENEA CIVIL WEB"
                 };
 
-            Autodesk.Windows.RibbonPanel rp4 =
-                new Autodesk.Windows.RibbonPanel
+                Autodesk.Windows.RibbonPanel rp1 = new Autodesk.Windows.RibbonPanel
                 {
-                    Source = rps4
+                    Source = rps1
                 };
 
-            rtab.Panels.Add(rp4);
+                rtab.Panels.Add(rp1);
 
-           
-            // -----------------------------
-            // ATENEA Register
-            // -----------------------------
 
-            Autodesk.Windows.RibbonButton buttonAteneaRegister =
-                CreateRibbonButton(
+                // -----------------------------
+                // ATENEA Register
+                // -----------------------------
+
+                Autodesk.Windows.RibbonButton buttonAteneaRegister = CreateRibbonButtonUpdate(
                     name: "Atenea Register",
                     text: "ATENEA Register",
-                    image: Resources.AteneaCompactModels,
+                    imageFileName: "AteneaCompactModels.png",
                     commandParameter: RibbonCommands.ButtonAteneaRegister,
                     tooltipTitle: "ATENEA Login",
-                    tooltipContent: "Authenticate your user to access ATENEA tools."
+                    tooltipContent: "Authenticate your user to access ATENEA tools.",
+                    commandHandler: commandHandler,
+                    resourceAssembly: resourceAssembly
                 );
 
-            // Añadimos button
-            rps4.Items.Add(buttonAteneaRegister);
+                rps1.Items.Add(buttonAteneaRegister);
+                rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
-            // Separador visual
-            rps4.Items.Add(new Autodesk.Windows.RibbonSeparator());
+                // -----------------------------
+                // Atenea Model Checker
+                // -----------------------------
 
-            // -----------------------------
-            // Atenea Model Checker
-            // -----------------------------
+                _buttonAteneaMC = CreateRibbonButtonUpdate(
+                    name: "Atenea Model Checker",
+                    text: "Atenea Model Checker",
+                    imageFileName: "AteneaCompactModels.png",
+                    commandParameter: RibbonCommands.ButtonAteneaModelChecker,
+                    tooltipTitle: "",
+                    tooltipContent: "",
+                    commandHandler: commandHandler,
+                    resourceAssembly: resourceAssembly
+                );
 
-            _buttonAteneaMC = CreateRibbonButton(
-                name: "Atenea Model Checker",
-                text: "Atenea Model Checker",
-                image: Resources.AteneaCompactModels,
-                commandParameter: RibbonCommands.ButtonAteneaModelChecker,
-                tooltipTitle: "",
-                tooltipContent: ""
-            );
+                rps1.Items.Add(_buttonAteneaMC);
+                rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
-            // Añadimos button
-            rps4.Items.Add(_buttonAteneaMC);
+                // -----------------------------
+                // Param Check
+                // -----------------------------
 
-            // Separador visual
-            rps4.Items.Add(new Autodesk.Windows.RibbonSeparator());
-
-            // -----------------------------
-            // Param Check
-            // -----------------------------
-
-            Autodesk.Windows.RibbonButton buttonAteneaParCheckExp =
-                CreateRibbonButton(
+                Autodesk.Windows.RibbonButton buttonAteneaParCheckExp = CreateRibbonButtonUpdate(
                     name: "Atenea Param Check Export",
                     text: "Atenea Param Check",
-                    image: Resources.AteneaCompactModels,
+                    imageFileName: "AteneaCompactModels.png",
                     commandParameter: RibbonCommands.ButtonAteneaParamCheckExp,
                     tooltipTitle: "",
-                    tooltipContent: ""
+                    tooltipContent: "",
+                    commandHandler: commandHandler,
+                    resourceAssembly: resourceAssembly
                 );
 
-            Autodesk.Windows.RibbonButton buttonAteneaParCheckImp =
-                CreateRibbonButton(
+                Autodesk.Windows.RibbonButton buttonAteneaParCheckImp = CreateRibbonButtonUpdate(
                     name: "Atenea Param Check Import",
                     text: "Atenea Param Check",
-                    image: Resources.AteneaCompactModels,
+                    imageFileName: "AteneaCompactModels.png",
                     commandParameter: RibbonCommands.ButtonAteneaParamCheckImp,
                     tooltipTitle: "",
-                    tooltipContent: ""
+                    tooltipContent: "",
+                    commandHandler: commandHandler,
+                    resourceAssembly: resourceAssembly
                 );
 
-            _parCheckDropdown = CreateRibbonSplitButton(
-                "parCheckDropdown",
-                "Atenea Param Check",
-                Resources.exporter,
-                new List<Autodesk.Windows.RibbonButton>
-                {
-                    buttonAteneaParCheckExp,
-                    buttonAteneaParCheckImp
-                }
-            );
+                _parCheckDropdown = CreateRibbonSplitButtonUpdate(
+                    "parCheckDropdown",
+                    "Atenea Param Check",
+                    imageFileName: "AteneaCompactModels.png",
+                    new List<Autodesk.Windows.RibbonButton>
+                    {
+                        buttonAteneaParCheckExp,
+                        buttonAteneaParCheckImp
+                    },
+                    resourceAssembly: resourceAssembly
+                );
 
-            // Añadimos button
-            rps4.Items.Add(_parCheckDropdown);
+                rps1.Items.Add(_parCheckDropdown);
+                rps1.Items.Add(new Autodesk.Windows.RibbonSeparator());
 
-            // Separador visual
-            rps4.Items.Add(new Autodesk.Windows.RibbonSeparator());
+                // -----------------------------
+                // Param Data
+                // -----------------------------
 
-            // -----------------------------
-            // Param Data
-            // -----------------------------
-
-            Autodesk.Windows.RibbonButton buttonAteneaParDataExp =
-                CreateRibbonButton(
+                Autodesk.Windows.RibbonButton buttonAteneaParDataExp = CreateRibbonButtonUpdate(
                     name: "Atenea Param Data Export",
                     text: "Atenea Param Data",
-                    image: Resources.exporter,
+                    imageFileName: "AteneaCompactModels.png",
                     commandParameter: RibbonCommands.ButtonAteneaParamDataExp,
                     tooltipTitle: "Exportador de propiedades",
-                    tooltipContent: "Exporta las propiedades de todos los Property Set de los modelos seleccionados a un archivo JSON."
+                    tooltipContent: "Exporta las propiedades de todos los Property Set de los modelos seleccionados a un archivo JSON.",
+                    commandHandler: commandHandler,
+                    resourceAssembly: resourceAssembly
                 );
 
-            Autodesk.Windows.RibbonButton buttonAteneaParDataImp =
-                CreateRibbonButton(
+                Autodesk.Windows.RibbonButton buttonAteneaParDataImp = CreateRibbonButtonUpdate(
                     name: "Atenea Param Data Import",
                     text: "Atenea Param Data",
-                    image: Resources.importer,
+                    imageFileName: "AteneaCompactModels.png",
                     commandParameter: RibbonCommands.ButtonAteneaParamDataImp,
                     tooltipTitle: "Importador de propiedades",
-                    tooltipContent: "Importa las propiedades seleccionadas desde un archivo JSON a los modelos seleccionados."
+                    tooltipContent: "Importa las propiedades seleccionadas desde un archivo JSON a los modelos seleccionados.",
+                    commandHandler: commandHandler,
+                    resourceAssembly: resourceAssembly
                 );
 
-            _parDataDropdown = CreateRibbonSplitButton(
-                "parDataDropdown",
-                "Atenea Param Data",
-                Resources.exporter,
-                new List<Autodesk.Windows.RibbonButton>
-                {
-                    buttonAteneaParDataExp,
-                    buttonAteneaParDataImp
-                }
-            );
+                _parDataDropdown = CreateRibbonSplitButtonUpdate(
+                    "parDataDropdown",
+                    "Atenea Param Data",
+                    imageFileName: "AteneaCompactModels.png",
+                    new List<Autodesk.Windows.RibbonButton>
+                    {
+                        buttonAteneaParDataExp,
+                        buttonAteneaParDataImp
+                    },
+                    resourceAssembly: resourceAssembly
+                );
 
-            // Añadimos button
-            rps4.Items.Add(_parDataDropdown);
+                rps1.Items.Add(_parDataDropdown);
 
-            // -----------------------------
-            // Bloquear herramientas ATENEA
-            // -----------------------------
+                // -----------------------------
+                // Bloquear herramientas ATENEA
+                // -----------------------------
 
-            SetAteneaToolsEnabled(false);
+                SetAteneaToolsEnabled(false);
 
-            // -----------------------------
-            // Activar Ribbon
-            // -----------------------------
+                // -----------------------------
+                // Activar Ribbon
+                // -----------------------------
 
-            rtab.IsActive = true;
+                rtab.IsActive = true;
+            }
+            // catch
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(
+                    ex.ToString(),
+                    "TYPSA Ribbon Error",
+                    System.Windows.Forms.MessageBoxButtons.OK,
+                    System.Windows.Forms.MessageBoxIcon.Error
+                );
+            }
         }
 
         // -----------------------------
@@ -251,12 +338,10 @@ namespace TYPSA.PS.RibbonButton.Civil
             )
             {
                 // Validamos
-                if (!(parameter is Autodesk.Windows.RibbonButton ribbonButton))
-                    return;
+                if (!(parameter is Autodesk.Windows.RibbonButton ribbonButton)) return;
 
                 // Obtenemos comando
-                string command =
-                    ribbonButton.CommandParameter as string;
+                string command = ribbonButton.CommandParameter as string;
 
                 // -----------------------------
                 // Procesar comando
@@ -268,42 +353,36 @@ namespace TYPSA.PS.RibbonButton.Civil
                     case RibbonCommands.ButtonAteneaRegister:
 
                         cls_00_ButtonAteneaRegister.ButtonAteneaRegister();
-
                         break;
 
                     // Model Checker
                     case RibbonCommands.ButtonAteneaModelChecker:
 
                         cls_00_ButtonAteneaModelChecker.ButtonAteneaModelChecker();
-
                         break;
 
                     // Param Check Export
                     case RibbonCommands.ButtonAteneaParamCheckExp:
 
-                        cls_00_ButtonAteneaParamCheckExp.ButtonAteneaParamDataExp();
-
+                        cls_00_ButtonAteneaParamCheckExp.ButtonAteneaParamCheckExp();
                         break;
 
                     // Param Check Import
                     case RibbonCommands.ButtonAteneaParamCheckImp:
 
-                        cls_00_ButtonAteneaParamCheckImp.ButtonAteneaParamDataImp();
-
+                        cls_00_ButtonAteneaParamCheckImp.ButtonAteneaParamCheckImp();
                         break;
 
                     // Param Data Export
                     case RibbonCommands.ButtonAteneaParamDataExp:
 
-                        cls_00_ButtonAteneaParamDataExp.PropExportBackToJSON();
-
+                        cls_00_ButtonAteneaParamDataExp.ButtonAteneaParamDataExp();
                         break;
 
                     // Param Data Import
                     case RibbonCommands.ButtonAteneaParamDataImp:
 
-                        cls_00_ButtonAteneaParamDataImp.PropImportBackFromJSON();
-
+                        cls_00_ButtonAteneaParamDataImp.ButtonAteneaParamDataImp();
                         break;
 
                     default:
@@ -312,133 +391,10 @@ namespace TYPSA.PS.RibbonButton.Civil
             }
         }
 
-        // -----------------------------
-        // Obtener ImageSource
-        // -----------------------------
+       
 
-        private BitmapImage GetImageSource(
-            Image img
-        )
-        {
-            try
-            {
-                // Validamos
-                if (img == null)
-                    throw new ArgumentNullException(nameof(img));
+      
 
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (Bitmap bitmap = new Bitmap(img))
-                    {
-                        bitmap.Save(
-                            ms,
-                            System.Drawing.Imaging.ImageFormat.Png
-                        );
-                    }
 
-                    ms.Position = 0;
-
-                    BitmapImage bmpImg =
-                        new BitmapImage();
-
-                    bmpImg.BeginInit();
-
-                    bmpImg.CacheOption =
-                        BitmapCacheOption.OnLoad;
-
-                    bmpImg.StreamSource = ms;
-
-                    bmpImg.EndInit();
-                    bmpImg.Freeze();
-
-                    // return
-                    return bmpImg;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(
-                    $"ERROR en GetImageSource: {ex.Message}",
-                    "Error de Conversión de Imagen"
-                );
-
-                return null;
-            }
-        }
-
-        // -----------------------------
-        // Crear Ribbon Button
-        // -----------------------------
-
-        private Autodesk.Windows.RibbonButton CreateRibbonButton(
-            string name,
-            string text,
-            Image image,
-            string commandParameter,
-            string tooltipTitle,
-            string tooltipContent
-        )
-        {
-            ImageSource imageSource =
-                GetImageSource(image);
-
-            Autodesk.Windows.RibbonButton button =
-                new Autodesk.Windows.RibbonButton
-                {
-                    Name = name,
-                    ShowText = true,
-                    Text = text,
-                    ShowImage = true,
-                    LargeImage = imageSource,
-                    Size = Autodesk.Windows.RibbonItemSize.Large,
-                    CommandHandler = new MyRibbonCommandHandler(),
-                    CommandParameter = commandParameter,
-
-                    ToolTip = new Autodesk.Windows.RibbonToolTip
-                    {
-                        Title = tooltipTitle,
-                        Content = tooltipContent,
-                        IsHelpEnabled = false
-                    }
-                };
-
-            // return
-            return button;
-        }
-
-        // -----------------------------
-        // Crear Ribbon Split Button
-        // -----------------------------
-
-        private Autodesk.Windows.RibbonSplitButton CreateRibbonSplitButton(
-            string name,
-            string text,
-            Image image,
-            List<Autodesk.Windows.RibbonButton> buttons
-        )
-        {
-            ImageSource imageSource =
-                GetImageSource(image);
-
-            Autodesk.Windows.RibbonSplitButton splitButton =
-                new Autodesk.Windows.RibbonSplitButton
-                {
-                    Name = name,
-                    Text = text,
-                    ShowImage = true,
-                    ShowText = true,
-                    Size = Autodesk.Windows.RibbonItemSize.Large,
-                    LargeImage = imageSource
-                };
-
-            // Añadimos botones
-            foreach (Autodesk.Windows.RibbonButton button in buttons)
-            {
-                splitButton.Items.Add(button);
-            }
-
-            // return
-            return splitButton;
-        }
     }
 }

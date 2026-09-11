@@ -248,12 +248,11 @@
     <Compile Include="02-Buttons\cls_00_AteneaWeb\cls_00_ButtonAteneaModelChecker\cls_00_ButtonAteneaModelChecker.cs" />
     <Compile Include="02-Buttons\cls_00_AteneaWeb\cls_00_ButtonAteneaParamDataExp\cls_00_ButtonAteneaParamDataExp.cs" />
     <Compile Include="02-Buttons\cls_00_AteneaWeb\cls_00_ButtonAteneaParamDataImp\cls_00_ButtonAteneaParamDataImp.cs" />
-    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_ProcessImpDataFromUser.cs" />
+    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_MainAteneaModelChecker\cls_00_ProcessModelChecks.cs" />
+    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_PrepareParamWebDataAsync.cs" />
     <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_ProcessAteneaParamCheckExp.cs" />
-    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_ParamExpMainWeb_Async.cs" />
-    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_ParamImpMainWeb_Async.cs" />
-    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_MainAteneaModelChecker\cls_00_GetExportDataModelChecker.cs" />
-    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_MainAteneaModelChecker\cls_00_GetDataModelChecker.cs" />
+    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_ParamImpMainWeb.cs" />
+    <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_MainAteneaModelChecker\cls_00_GetExportData.cs" />
     <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_MainAteneaParamCheckExp\cls_00_GetAllObjectCat.cs" />
     <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_MainAteneaParamCheckExp\cls_00_GetFinalJsonDictCivilParamCheckCons.cs" />
     <Compile Include="03-Main\cls_00_AteneaWeb\cls_00_MainAteneaParamCheckExp\cls_00_FilterJsonBySelectedPsets.cs" />
@@ -288,9 +287,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="00-Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
@@ -368,6 +365,18 @@
       <Project>{80066af0-df2f-5494-401d-98f2bfad4194}</Project>
       <Name>TYPSA.SharedLibSSO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="00-Resources\ArrowClickerIcon.png" />
+    <EmbeddedResource Include="00-Resources\ArrowClickerIcon02.png" />
+    <EmbeddedResource Include="00-Resources\AteneaCompactModels.png" />
+    <EmbeddedResource Include="00-Resources\AteneaExcel.png" />
+    <EmbeddedResource Include="00-Resources\AteneaModelChecker.png" />
+    <EmbeddedResource Include="00-Resources\AteneaModelCheckerCivil.png" />
+    <EmbeddedResource Include="00-Resources\exporter.png" />
+    <EmbeddedResource Include="00-Resources\importer.png" />
+    <EmbeddedResource Include="00-Resources\ParamExcel.png" />
+    <EmbeddedResource Include="00-Resources\typsa-dest.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

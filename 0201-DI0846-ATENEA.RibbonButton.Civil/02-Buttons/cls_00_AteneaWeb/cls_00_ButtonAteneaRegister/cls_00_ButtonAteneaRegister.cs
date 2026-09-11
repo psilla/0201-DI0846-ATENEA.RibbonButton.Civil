@@ -152,7 +152,6 @@ namespace TYPSA.PS.RibbonButton.Civil
                 // -----------------------------
 
                 string email = cls_00_AteneaUser.GetUserEmail(isSpanish);
-
                 // Validamos
                 if (string.IsNullOrWhiteSpace(email)) return;
 
@@ -177,7 +176,6 @@ namespace TYPSA.PS.RibbonButton.Civil
                         "ATENEA",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning
                     );
-
                     return;
                 }
 
