@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AppVersion="1.0.0"
+    ProductCode="{93FCD33F-1D60-4E72-8B70-B9BCB8F6114B}"
+    Name="TYPSA ATENEA Civil 2021"
+    Description="TYPSA ATENEA plugin for Autodesk Civil 3D 2021"
+    Author="TYPSA">
+
+    <CompanyDetails
+        Name="TYPSA"
+        Url="https://www.typsa.com" />
+
+    <!-- Civil 3D 2021 -->
+    <Components Description="Civil 3D 2021">
+
+        <RuntimeRequirements
+            OS="Win64"
+            Platform="Civil3D"
+            SeriesMin="R24.0"
+            SeriesMax="R24.0" />
+
+        <ComponentEntry
+            AppName="TYPSA ATENEA Civil 2021"
+            ModuleName="./Contents/2021/0201-DI0846-ATENEA.RibbonButton.Civil.Net48.dll"
+            AppDescription="TYPSA ATENEA Civil"
+            LoadOnAutoCADStartup="True" />
+
+    </Components>
+
+</ApplicationPackage>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AppVersion="1.0.0"
+    ProductCode="{658C44DB-E83D-4D88-8A82-72ECD7525FBE}"
+    Name="TYPSA ATENEA Civil 2023"
+    Description="TYPSA ATENEA plugin for Autodesk Civil 3D 2023"
+    Author="TYPSA">
+
+    <CompanyDetails
+        Name="TYPSA"
+        Url="https://www.typsa.com" />
+
+    <!-- Civil 3D 2023 -->
+    <Components Description="Civil 3D 2023">
+
+        <RuntimeRequirements
+            OS="Win64"
+            Platform="Civil3D"
+            SeriesMin="R24.2"
+            SeriesMax="R24.2" />
+
+        <ComponentEntry
+            AppName="TYPSA ATENEA Civil 2023"
+            ModuleName="./Contents/2023/0201-DI0846-ATENEA.RibbonButton.Civil.Net48.dll"
+            AppDescription="TYPSA ATENEA Civil"
+            LoadOnAutoCADStartup="True" />
+
+    </Components>
+
+</ApplicationPackage>

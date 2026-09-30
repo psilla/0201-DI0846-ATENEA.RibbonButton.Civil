@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
-// asociada a un ensamblado.
+// asociada con un ensamblado.
 [assembly: AssemblyTitle("0201-DI0846-ATENEA.RibbonButton.Civil")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
-[assembly: Guid("5c40e114-24c1-4f41-904e-9094e3d09a96")]
+[assembly: Guid("eb1fddc9-f7df-4453-b518-52f2e28b1514")]
 
 // La información de versión de un ensamblado consta de los cuatro valores siguientes:
 //

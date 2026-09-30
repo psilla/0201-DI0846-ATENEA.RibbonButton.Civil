@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AppVersion="1.0.0"
+    ProductCode="{B8E8B374-CD7D-410D-A46B-85F1C870C858}"
+    Name="TYPSA ATENEA Civil 2026"
+    Description="TYPSA ATENEA plugin for Autodesk Civil 3D 2026"
+    Author="TYPSA">
+
+    <CompanyDetails
+        Name="TYPSA"
+        Url="https://www.typsa.com" />
+
+    <Components Description="Civil 3D 2026">
+
+        <RuntimeRequirements
+            OS="Win64"
+            Platform="Civil3D"
+            SeriesMin="R25.1"
+            SeriesMax="R25.1" />
+
+        <ComponentEntry
+            AppName="TYPSA ATENEA Civil 2026"
+            ModuleName="./Contents/2026/0201-DI0846-ATENEA.RibbonButton.Civil.Net10.dll"
+            AppDescription="TYPSA ATENEA Civil"
+            LoadOnAutoCADStartup="True"
+            LoadOnAppearance="True" />
+
+    </Components>
+
+</ApplicationPackage>

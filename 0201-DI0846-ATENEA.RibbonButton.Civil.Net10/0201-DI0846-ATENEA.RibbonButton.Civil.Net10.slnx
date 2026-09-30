@@ -1,0 +1,52 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="2026" />
+    <BuildType Name="2027" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+  </Configurations>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibAutocad/TYPSA.SharedLibAutocad/TYPSA.SharedLibAutocad.csproj" Id="631b9318-a021-4b24-87f0-3fec637eae77">
+    <BuildType Solution="2026|*" Project="Release" />
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibCivil/TYPSA.SharedLibCivil/TYPSA.SharedLibCivil.csproj" Id="755847ff-9f9b-4ef0-85f7-534d02e128a2">
+    <BuildType Solution="2026|*" Project="Release" />
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibCivil/TYPSA.SharedLibCivil_2026/TYPSA.SharedLibCivil_2026.csproj">
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibCivil/TYPSA.SharedLibCivil_2027/TYPSA.SharedLibCivil_2027.csproj">
+    <BuildType Solution="2026|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibEndPoints/TYPSA.SharedLibEndPoints/TYPSA.SharedLibEndPoints.csproj" Id="db670f85-371e-4bce-9253-f2bdd6a66dea">
+    <BuildType Solution="2026|*" Project="Release" />
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibExcel/TYPSA.SharedLibExcel/TYPSA.SharedLibExcel.csproj" Id="ff31b661-8ce6-420f-8720-f077b273e9c6">
+    <BuildType Solution="2026|*" Project="Release" />
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibForms/TYPSA.SharedLibForms/TYPSA.SharedLibForms.csproj" Id="8f836313-b339-4db6-8a55-af61386871b4">
+    <BuildType Solution="2026|*" Project="Release" />
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibJson/TYPSA.SharedLibJson/TYPSA.SharedLibJson.csproj" Id="ebc38772-93a0-4f36-97be-d47ba2e37bda">
+    <BuildType Solution="2026|*" Project="Release" />
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../../0000-TYPSA.SharedLib/0000-TYPSA.SharedLibSSO/src/Typsa.Sso.Client/TYPSA.SharedLibSSO.csproj">
+    <BuildType Solution="2026|*" Project="Release" />
+    <BuildType Solution="2027|*" Project="Release" />
+  </Project>
+  <Project Path="../0201-DI0846-ATENEA.RibbonButton.Civil/0201-DI0846-ATENEA.RibbonButton.Civil.csproj" Id="eb1fddc9-f7df-4453-b518-52f2e28b1514" />
+  <Project Path="../TYPSA.ATENEA.Civil.2026/TYPSA.ATENEA.Civil.2026.vdproj" Type="Installer">
+    <BuildType Solution="2026|*" Project="Debug" />
+    <BuildType Solution="2027|*" Project="Debug" />
+  </Project>
+  <Project Path="../TYPSA.ATENEA.Civil.2027/TYPSA.ATENEA.Civil.2027.vdproj" Type="Installer">
+    <BuildType Solution="2026|*" Project="Debug" />
+    <BuildType Solution="2027|*" Project="Debug" />
+  </Project>
+  <Project Path="0201-DI0846-ATENEA.RibbonButton.Civil.Net10.csproj" />
+</Solution>

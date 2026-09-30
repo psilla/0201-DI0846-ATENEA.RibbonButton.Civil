@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using Autodesk.AutoCAD.Runtime;
-using TYPSA.PS.RibbonButton.Civil.Source.Class.Main;
-using TYPSA.SharedLib.Autocad.Main;
-using TYPSA.SharedLib.Civil.Buttons;
-using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
+﻿using Autodesk.AutoCAD.Runtime;
+using TYPSA.SharedLib.EndPoints;
+using static TYPSA.SharedLib.Autocad.cls_00_CadInfoHelper;
+using static TYPSA.SharedLib.Civil.cls_00_UiTexts;
+using System;
 
-namespace TYPSA.PS.RibbonButton.Civil
+namespace TYPSA.ATENEA.RibbonButton.Civil
 {
-    internal class cls_00_ButtonAteneaParamCheckExp
+    public class cls_00_ButtonAteneaParamCheckExp
     {
         private static UiTexts GetUiTexts(bool isSpanish)
         {
             return new UiTexts
             {
                 MsgCompleted = isSpanish
-                    ? $"{nameof(RibbonCommands.ProcessAteneaParamCheckExp)} finalizado correctamente."
-                    : $"{nameof(RibbonCommands.ProcessAteneaParamCheckExp)} completed successfully.",
+                    ? $"{nameof(AteneaRibbonCommands.ProcessAteneaParamCheckExp)} finalizado correctamente."
+                    : $"{nameof(AteneaRibbonCommands.ProcessAteneaParamCheckExp)} completed successfully.",
 
                 MsgTitle = isSpanish
                     ? "Proceso completado"
@@ -24,33 +22,38 @@ namespace TYPSA.PS.RibbonButton.Civil
             };
         }
 
-        [CommandMethod(RibbonCommands.ButtonAteneaParamCheckExp)]
+        [CommandMethod(AteneaRibbonCommands.ButtonAteneaParamCheckExp)]
         public static void ButtonAteneaParamCheckExp()
         {
             // ---------------------------------
             // Obtener datos de usuario
             // ---------------------------------
 
-            bool userData = cls_00_GetUserData.GetUserData(
-                out string projectCode, out List<string> selectedFiles, out string selectedFolderPath, out DateTime startTime,
-                customPathLabel: "Please, paste the folder containing the DWG files to analyze"
+            bool userData = TYPSA.SharedLib.Autocad.cls_00_GetUserData.GetUserData(
+                out string projectCode, out DateTime startTime
             );
             // Validamos
             if (!userData) return;
 
             // ---------------------------------
-            // Obtener informacion
+            // Obtener información sesión ATENEA
             // ---------------------------------
 
-            CadSessionInfo infoCad = GetCivilSessionInfo();
+            AteneaSessionInfo sessionInfo = GetAteneaCivilSessionInfo(
+                projectCode, startTime
+            );
 
             // ---------------------------------
-            // Detectar idioma 
+            // Detectar idioma
             // ---------------------------------
 
             bool isSpanish =
-                (infoCad.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
-                (infoCad.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
+                (sessionInfo.SoftwareLanguage?.IndexOf(
+                    "Spanish", StringComparison.OrdinalIgnoreCase
+                ) >= 0) ||
+                (sessionInfo.SoftwareLanguage?.IndexOf(
+                    "Español", StringComparison.OrdinalIgnoreCase
+                ) >= 0);
 
             // ---------------------------------
             // Texto UI segun idioma
@@ -63,8 +66,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             // -------------------------------
 
             cls_00_MainAteneaParamCheckExp.MainAteneaParamCheckExp(
-                selectedFiles.ToArray(), selectedFolderPath, projectCode, 
-                startTime, infoCad, uiTexts, isSpanish
+                sessionInfo, uiTexts, isSpanish
             );
         }
 

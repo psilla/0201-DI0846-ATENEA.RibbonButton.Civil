@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AppVersion="1.0.0"
+    ProductCode="{BDCA5EC9-3B3B-4723-9747-83A7A5C83C55}"
+    Name="TYPSA ATENEA Civil 2022"
+    Description="TYPSA ATENEA plugin for Autodesk Civil 3D 2022"
+    Author="TYPSA">
+
+    <CompanyDetails
+        Name="TYPSA"
+        Url="https://www.typsa.com" />
+
+    <!-- Civil 3D 2022 -->
+    <Components Description="Civil 3D 2022">
+
+        <RuntimeRequirements
+            OS="Win64"
+            Platform="Civil3D"
+            SeriesMin="R24.1"
+            SeriesMax="R24.1" />
+
+        <ComponentEntry
+            AppName="TYPSA ATENEA Civil 2022"
+            ModuleName="./Contents/2022/0201-DI0846-ATENEA.RibbonButton.Civil.Net48.dll"
+            AppDescription="TYPSA ATENEA Civil"
+            LoadOnAutoCADStartup="True" />
+
+    </Components>
+
+</ApplicationPackage>

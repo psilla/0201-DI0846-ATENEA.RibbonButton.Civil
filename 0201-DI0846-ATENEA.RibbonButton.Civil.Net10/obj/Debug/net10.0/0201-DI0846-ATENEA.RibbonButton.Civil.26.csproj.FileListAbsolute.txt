@@ -1,0 +1,13 @@
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\bin\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.deps.json
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\bin\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.dll
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\bin\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.pdb
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.GeneratedMSBuildEditorConfig.editorconfig
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.AssemblyInfoInputs.cache
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.AssemblyInfo.cs
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.csproj.CoreCompileInputs.cache
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.sourcelink.json
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.dll
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\refint\0201-DI0846-ATENEA.RibbonButton.Civil.26.dll
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0846-ATENEA.RibbonButton.Civil.26.pdb
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\ref\0201-DI0846-ATENEA.RibbonButton.Civil.26.dll
+C:\0201-DI0846-ATENEA.Civil\0201-DI0846-ATENEA.RibbonButton.Civil.26\obj\Debug\net10.0\0201-DI0.D105C97D.Up2Date

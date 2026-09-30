@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Autodesk.AutoCAD.Runtime;
-using TYPSA.PS.RibbonButton.Civil.Source.Class.Main;
-using TYPSA.SharedLib.Autocad.Main;
-using TYPSA.SharedLib.Civil.Buttons;
-using TYPSA.SharedLib.Civil.JsonTools;
+﻿using Autodesk.AutoCAD.Runtime;
+using TYPSA.SharedLib.Civil;
 using TYPSA.SharedLib.EndPoints;
-using static TYPSA.PS.RibbonButton.Civil.cls_00_PrepareParamWebDataAsync;
-using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
+using static TYPSA.SharedLib.Autocad.cls_00_CadInfoHelper;
+using static TYPSA.SharedLib.Civil.cls_00_UiTexts;
+using System.Windows.Forms;
+using System;
+using System.Threading.Tasks;
 
-namespace TYPSA.PS.RibbonButton.Civil
+namespace TYPSA.ATENEA.RibbonButton.Civil
 {
-    internal class cls_00_ButtonAteneaParamDataImp
+    public class cls_00_ButtonAteneaParamDataImp
     {
         private static bool ValidateJsonData(
             Root dataByModelFromJson,
@@ -64,8 +60,8 @@ namespace TYPSA.PS.RibbonButton.Civil
             return new UiTexts
             {
                 MsgCompleted = isSpanish
-                    ? $"{nameof(RibbonCommands.ButtonAteneaParamDataImp)} finalizado correctamente."
-                    : $"{nameof(RibbonCommands.ButtonAteneaParamDataImp)} completed successfully.",
+                    ? $"{nameof(AteneaRibbonCommands.ButtonAteneaParamDataImp)} finalizado correctamente."
+                    : $"{nameof(AteneaRibbonCommands.ButtonAteneaParamDataImp)} completed successfully.",
 
                 MsgTitle = isSpanish
                     ? "Proceso completado"
@@ -73,34 +69,38 @@ namespace TYPSA.PS.RibbonButton.Civil
             };
         }
 
-        [CommandMethod(RibbonCommands.ButtonAteneaParamDataImp)]
+        [CommandMethod(AteneaRibbonCommands.ButtonAteneaParamDataImp)]
         public static void ButtonAteneaParamDataImp()
         {
             // ---------------------------------
             // Obtener datos de usuario
             // ---------------------------------
 
-            bool userData = cls_00_GetUserData.GetUserData(
-                out string projectCode, out List<string> selectedFiles, out string selectedFolderPath, out DateTime startTime,
-                customPathLabel: "Please, paste the folder containing the DWG files to analyze"
+            bool userData = TYPSA.SharedLib.Autocad.cls_00_GetUserData.GetUserData(
+                out string projectCode, out DateTime startTime
             );
             // Validamos
             if (!userData) return;
 
             // ---------------------------------
-            // Obtener informacion
+            // Obtener información sesión ATENEA
             // ---------------------------------
 
-            CadSessionInfo infoCad = GetCivilSessionInfo();
-            cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
+            AteneaSessionInfo sessionInfo = GetAteneaCivilSessionInfo(
+                projectCode, startTime
+            );
 
             // ---------------------------------
-            // Detectar idioma 
+            // Detectar idioma
             // ---------------------------------
 
             bool isSpanish =
-                (infoCad.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
-                (infoCad.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
+                (sessionInfo.SoftwareLanguage?.IndexOf(
+                    "Spanish", StringComparison.OrdinalIgnoreCase
+                ) >= 0) ||
+                (sessionInfo.SoftwareLanguage?.IndexOf(
+                    "Español", StringComparison.OrdinalIgnoreCase
+                ) >= 0);
 
             // ---------------------------------
             // Texto UI según idioma
@@ -108,27 +108,31 @@ namespace TYPSA.PS.RibbonButton.Civil
 
             UiTexts uiTexts = GetUiTexts(isSpanish);
 
+#if CIVIL2020 || CIVIL2021 || CIVIL2022 || CIVIL2023 || CIVIL2024 || CIVIL2025 || CIVIL2026 || CIVIL2027
+
             // ---------------------------------
-            // Llamar fase asyn
+            // Preparar informacion Web
             // ---------------------------------
 
-            ParamImpPreparedData dataFromAsyn = Task.Run(() => ParamImpMainWeb_Async(
-                projectCode, infoCad, ateneaEndpoints, isSpanish)).GetAwaiter().GetResult();
+            ParamImpPreparedDataCivil dataFromAsyn = Task.Run(() =>
+                cls_00_PrepareParamWebDataAsyncCivil.ParamImpMainWeb_Async(sessionInfo, isSpanish)).GetAwaiter().GetResult();
             // Validamos
             if (dataFromAsyn == null) return;
+
+#endif
 
             // -------------------------------
             // Cargar JSON Global desde API
             // -------------------------------
 
+            cls_00_AteneaEndPointsCivil ateneaEndpoints = new cls_00_AteneaEndPointsCivil();
             Root dataByModelFromJson;
             // try
             try
             {
                 // Obtenemos el objeto
                 dataByModelFromJson = Task.Run(() => cls_00_PostParamSet.PostSetAsync<Root>(
-                    ateneaEndpoints.EndpointGetDataByModelUrl, projectCode, dataFromAsyn.AteneaVersion, 
-                    isSpanish, dataFromAsyn.UserNameBySso
+                    sessionInfo, isSpanish, ateneaEndpoints.EndpointGetDataByModelUrl, dataFromAsyn.UserNameBySso
                 )).GetAwaiter().GetResult();
 
                 // -------------------------------
@@ -160,8 +164,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             // -------------------------------
 
             cls_00_MainAteneaParamDataImp.MainAteneaParamDataImp(
-                selectedFiles.ToArray(), selectedFolderPath, projectCode,
-                dataByModelFromJson, dataFromAsyn, isSpanish
+                sessionInfo, dataByModelFromJson, dataFromAsyn, isSpanish
             );
 
             // -------------------------------

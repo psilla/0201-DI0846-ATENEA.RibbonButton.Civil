@@ -6,10 +6,10 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using TYPSA.SharedLib.Autocad;
 using _0201_DI0846_ATENEA.RibbonButton.Civil.Properties;
-using TYPSA.SharedLib.Autocad.Main;
 
-namespace TYPSA.PS.RibbonButton.Civil
+namespace TYPSA.ATENEA.RibbonButton.Civil
 {
     internal class cls_00_ExportAteneaCheckToHtml
     {

@@ -1,24 +1,17 @@
-﻿using System;
+﻿using Autodesk.AutoCAD.Runtime;
+using TYPSA.SharedLib.Autocad;
+using TYPSA.SharedLib.EndPoints;
+using TYPSA.SharedLib.UserForms;
+using static TYPSA.SharedLib.Autocad.cls_00_CadInfoHelper;
+using static TYPSA.SharedLib.Civil.cls_00_UiTexts;
+using Exception = System.Exception;
+using System.Windows.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
-using Autodesk.AutoCAD.Runtime;
-using TYPSA.SharedLib.Autocad.Main;
-using TYPSA.SharedLib.Civil.Buttons;
-using TYPSA.SharedLib.UserForms;
-using static TYPSA.SharedLib.Autocad.Main.cls_00_CadInfoHelper;
-using Exception = System.Exception;
 
-namespace TYPSA.PS.RibbonButton.Civil
+namespace TYPSA.ATENEA.RibbonButton.Civil
 {
-    public class UiTexts
-    {
-        public string Title { get; set; }
-        public string MsgNoOptions { get; set; }
-        public string MsgCompleted { get; set; }
-        public string MsgTitle { get; set; }
-    }
-
     public class cls_00_ButtonAteneaModelChecker
     {
         private static UiTexts GetUiTexts(bool isSpanish)
@@ -34,8 +27,8 @@ namespace TYPSA.PS.RibbonButton.Civil
                     : "No options were selected. The process has been cancelled.",
 
                 MsgCompleted = isSpanish
-                    ? $"{nameof(RibbonCommands.ProcessAteneaModelChecker)} finalizado correctamente."
-                    : $"{nameof(RibbonCommands.ProcessAteneaModelChecker)} completed successfully.",
+                    ? $"{nameof(AteneaRibbonCommands.ProcessAteneaModelChecker)} finalizado correctamente."
+                    : $"{nameof(AteneaRibbonCommands.ProcessAteneaModelChecker)} completed successfully.",
 
                 MsgTitle = isSpanish
                     ? "Proceso completado"
@@ -43,7 +36,7 @@ namespace TYPSA.PS.RibbonButton.Civil
             };
         }
 
-        [CommandMethod(RibbonCommands.ButtonAteneaModelChecker)]
+        [CommandMethod(AteneaRibbonCommands.ButtonAteneaModelChecker)]
         public static void ButtonAteneaModelChecker()
         {
             // try
@@ -53,27 +46,31 @@ namespace TYPSA.PS.RibbonButton.Civil
                 // Obtener datos de usuario
                 // ---------------------------------
 
-                bool userData = cls_00_GetUserData.GetUserData(
-                    out string projectCode, out List<string> selectedFiles,
-                    out string selectedFolderPath, out DateTime startTime,
-                    customPathLabel: "Please, paste the folder containing the DWG files to analyze"
+                bool userData = TYPSA.SharedLib.Autocad.cls_00_GetUserData.GetUserData(
+                    out string projectCode, out DateTime startTime
                 );
                 // Validamos
                 if (!userData) return;
 
                 // ---------------------------------
-                // Obtener informacion
+                // Obtener información sesión ATENEA
                 // ---------------------------------
 
-                CadSessionInfo infoCad = GetCivilSessionInfo();
+                AteneaSessionInfo sessionInfo = GetAteneaCivilSessionInfo(
+                    projectCode, startTime
+                );
 
                 // ---------------------------------
-                // Detectar idioma 
+                // Detectar idioma
                 // ---------------------------------
-             
+
                 bool isSpanish =
-                    (infoCad.CivilLanguage?.IndexOf("Spanish", StringComparison.OrdinalIgnoreCase) >= 0) ||
-                    (infoCad.CivilLanguage?.IndexOf("Español", StringComparison.OrdinalIgnoreCase) >= 0);
+                    (sessionInfo.SoftwareLanguage?.IndexOf(
+                        "Spanish", StringComparison.OrdinalIgnoreCase
+                    ) >= 0) ||
+                    (sessionInfo.SoftwareLanguage?.IndexOf(
+                        "Español", StringComparison.OrdinalIgnoreCase
+                    ) >= 0);
 
                 // ---------------------------------
                 // Texto UI segun idioma
@@ -106,8 +103,7 @@ namespace TYPSA.PS.RibbonButton.Civil
                 // -------------------------------
 
                 cls_00_MainAteneaModelChecker.MainAteneaModelChecker(
-                    selectedFiles.ToArray(), selectedFolderPath, projectCode, selectedOptions, 
-                    startTime, infoCad, uiTexts, isSpanish
+                    sessionInfo, selectedOptions, uiTexts, isSpanish
                 );
             }
             // catch

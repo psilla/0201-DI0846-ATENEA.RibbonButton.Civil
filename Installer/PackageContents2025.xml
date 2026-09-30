@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AppVersion="1.0.0"
+    ProductCode="{AE3CC8E2-B715-4945-9B35-2964BBF69E4E}"
+    Name="TYPSA ATENEA Civil 2025"
+    Description="TYPSA ATENEA plugin for Autodesk Civil 3D 2025"
+    Author="TYPSA">
+
+    <CompanyDetails
+        Name="TYPSA"
+        Url="https://www.typsa.com" />
+
+    <!-- Civil 3D 2025 -->
+    <Components Description="Civil 3D 2025">
+
+        <RuntimeRequirements
+            OS="Win64"
+            Platform="Civil3D"
+            SeriesMin="R25.0"
+            SeriesMax="R25.0" />
+
+        <ComponentEntry
+            AppName="TYPSA ATENEA Civil 2025"
+            ModuleName="./Contents/2025/0201-DI0846-ATENEA.RibbonButton.Civil.Net48.dll"
+            AppDescription="TYPSA ATENEA Civil"
+            LoadOnAutoCADStartup="True" />
+
+    </Components>
+
+</ApplicationPackage>
